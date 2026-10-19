@@ -38,7 +38,7 @@ export function SocialProof() {
   return (
     <section className={styles.section} aria-label="Surbhi Gupta's public work and press coverage">
       <div className={styles.heading}>
-        <Eyebrow>Celebrity consultations</Eyebrow>
+        <Eyebrow>Public appearances</Eyebrow>
         <h2>
           Trusted by <em>1,50,000+</em> individuals for
           <span>Surbhi Kundali reports</span>
@@ -63,10 +63,9 @@ export function SocialProof() {
         </div>
       </div>
       <div className={`${styles.heading} ${styles.pressHeading}`}>
-        <Eyebrow>As featured in</Eyebrow>
+        <Eyebrow>In the press</Eyebrow>
         <h2>
-          Making headlines.
-          <span>Trusted by the press.</span>
+          Surbhi Gupta <span>in the media.</span>
         </h2>
       </div>
       <div className={styles.marquee} aria-label="Press coverage featuring Surbhi Gupta">

@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { InquiryModalProvider, InquiryTrigger } from "./InquiryModal";
 import { SocialProof } from "./SocialProof";
+import { CustomerMessages } from "./CustomerMessages";
 import { StickyInquiryBar } from "./StickyInquiryBar";
 import { FloatingWhatsApp } from "./FloatingWhatsApp";
 import styles from "./LandingPage.module.css";
@@ -20,37 +21,37 @@ import styles from "./LandingPage.module.css";
 const topics = [
   {
     title: "Love & relationships",
-    copy: "A connection feels uncertain, or the same question keeps returning. Bring the story behind it.",
+    copy: "Is this relationship right for you? Where might it be going?",
     image: "/images/love-relationships.webp",
     alt: "A couple in a quiet moment together",
   },
   {
-    title: "Career & direction",
-    copy: "A role, a risk, or a fresh start: talk through the choice in front of you.",
-    image: "/images/career-business.webp",
-    alt: "A professional considering her next step",
-  },
-  {
-    title: "Marriage & compatibility",
-    copy: "Explore commitment, expectations, and the future you are considering together.",
+    title: "Marriage",
+    copy: "Ask about timing, compatibility, or a delay you keep facing.",
     image: "/images/marriage-matchmaking.webp",
     alt: "A couple sharing a wedding moment",
   },
   {
-    title: "Family & wellbeing",
-    copy: "Make room for the questions about home, family, and your own sense of balance.",
-    image: "/images/child-family.webp",
-    alt: "A family sharing time together",
+    title: "Career & business",
+    copy: "Should you stay, switch, start something new, or wait?",
+    image: "/images/career-business.webp",
+    alt: "A professional considering her next step",
   },
   {
     title: "Money & stability",
-    copy: "Look at changing priorities and the sense of security you are trying to build.",
+    copy: "Talk through a financial choice and your sense of security.",
     image: "/images/wealth-finance.webp",
     alt: "A warmly lit space symbolising stability",
   },
   {
-    title: "A question of your own",
-    copy: "Your question does not need a label. Tell us what has been on your mind.",
+    title: "Family & children",
+    copy: "Bring questions about home, children, or responsibilities.",
+    image: "/images/child-family.webp",
+    alt: "A family sharing time together",
+  },
+  {
+    title: "One important decision",
+    copy: "When you simply cannot tell which path to choose.",
     image: "/images/health-wellbeing.webp",
     alt: "A woman taking a reflective pause",
   },
@@ -58,24 +59,34 @@ const topics = [
 
 const reasonsToTalk = [
   {
-    title: "A choice is weighing on you.",
-    copy: "A job change, a commitment, a move: give the decision the time and context it deserves.",
+    title: "“I’m torn between two choices.”",
+    copy: "You can talk through the decision before you feel ready to make it.",
   },
   {
-    title: "Too many opinions are in the room.",
-    copy: "Bring your own questions forward and talk through what matters to you.",
+    title: "“Everyone has a different opinion.”",
+    copy: "Make space for your own question and what matters to you.",
   },
   {
-    title: "A pattern keeps returning.",
-    copy: "Explore what you have noticed and where your birth chart may offer perspective.",
+    title: "“The same problem keeps coming back.”",
+    copy: "Explore the pattern you have noticed and the context around it.",
   },
   {
-    title: "You want to ask what comes next.",
-    copy: "A live conversation leaves room to pause, clarify, and follow up.",
+    title: "“I need a clearer next step.”",
+    copy: "Bring the real situation, even if you cannot put it into one neat question.",
   },
 ];
 
 const faqs = [
+  {
+    question: "Will I speak directly with Surbhi Gupta?",
+    answer:
+      "Yes. The consultation is intended as a personal conversation with Surbhi Gupta, once the team confirms her availability and the appointment details with you.",
+  },
+  {
+    question: "What can I ask about?",
+    answer:
+      "You can bring a question about relationships, marriage, career, business, family, finances, or another important decision. Share the context that matters to you.",
+  },
   {
     question: "Is the inquiry free?",
     answer:
@@ -97,9 +108,9 @@ const faqs = [
       "The team receives your inquiry by email and may reply by WhatsApp, phone or email. They will discuss the right consultation, timing and any fee with you personally.",
   },
   {
-    question: "Can I ask about more than one area?",
+    question: "How is my information handled?",
     answer:
-      "Absolutely. Choose the closest topic, then add context in the optional question box. You can discuss the focus of the conversation during follow-up.",
+      "Your inquiry is emailed to the Surabhi Astrology team for personal follow-up. The site does not keep a separate lead database. The privacy policy linked in the footer explains the current handling.",
   },
 ];
 
@@ -185,9 +196,9 @@ function Hero() {
             Thinking About
           </p>
           <div className={styles.heroActions}>
-            <PillLink>Share your question</PillLink>
-            <a href="#consultations" className={styles.textLink}>
-              Explore consultations <ArrowDownRight size={18} />
+            <PillLink>Share Your Question</PillLink>
+            <a href="#how-it-works" className={styles.textLink}>
+              How Consultation Works <ArrowDownRight size={18} />
             </a>
           </div>
           <div className={styles.heroTrust} aria-label="What to expect from your consultation">
@@ -268,11 +279,11 @@ function Topics() {
         <div className={styles.centerHeading}>
           <Eyebrow>Where your story begins</Eyebrow>
           <SectionTitle id="topics-title">
-            What would you like <em>clarity on?</em>
+            What’s Been <em>On Your Mind Lately?</em>
           </SectionTitle>
           <p>
-            Choose the area closest to your question. You can share the details and anything that
-            does not fit a category in your inquiry.
+            Start with the question that feels most important. You can tell us the full story in
+            your inquiry.
           </p>
         </div>
         <div className={styles.topicGrid}>
@@ -298,8 +309,8 @@ function Topics() {
           ))}
         </div>
         <div className={styles.centerAction}>
-          <PillLink>Begin a free inquiry</PillLink>
-          <p>We will help you decide the best focus during follow-up.</p>
+          <PillLink>Share Your Question</PillLink>
+          <p>Not sure which topic fits? Choose the closest one and add your context.</p>
         </div>
       </div>
     </section>
@@ -313,13 +324,13 @@ function WhyConsult() {
         <div className={styles.whyIntro}>
           <Eyebrow light>Why speak one-on-one</Eyebrow>
           <h2 id="why-title">
-            Come with a question. <em>Bring the whole story.</em>
+            You don’t need to have <em>everything figured out.</em>
           </h2>
           <p>
-            A personal reading gives you room to explain the situation, ask what follows, and
-            consider your next step with care.
+            You can arrive with uncertainty, two choices, or a story that is hard to summarise. That
+            is enough to begin the conversation.
           </p>
-          <PillLink gold>Begin a free inquiry</PillLink>
+          <PillLink gold>Share Your Question</PillLink>
           <span className={styles.whyMark} aria-hidden="true">
             ✧
           </span>
@@ -345,28 +356,28 @@ function Explore() {
     <section className={`${styles.exploreSection} sectionSpace`} aria-labelledby="explore-title">
       <div className="siteContainer">
         <div className={styles.centerHeading}>
-          <Eyebrow>Beyond a quick answer</Eyebrow>
+          <Eyebrow>What the conversation can offer</Eyebrow>
           <SectionTitle id="explore-title">
-            Make room for <em>understanding.</em>
+            A clearer view <em>to take forward.</em>
           </SectionTitle>
           <p>
-            A consultation is shaped around your circumstances, your questions and what matters to
-            you now.
+            Explore your situation, its timing, and the choices in front of you without expecting a
+            single answer to make the decision for you.
           </p>
         </div>
         <div className={styles.exploreGrid}>
           <article className={`${styles.exploreCard} ${styles.exploreWine}`}>
             <div className={styles.cardTop}>
-              <span>01 / YOUR STORY</span>
+              <span>01 / YOUR SITUATION</span>
               <Heart size={24} />
             </div>
             <div>
               <h3>
-                Start with what
+                Understand what
                 <br />
-                you are living.
+                is happening.
               </h3>
-              <p>Share the situation behind the question, not only a date or a prediction.</p>
+              <p>Discuss the circumstances behind your question, not only a date or prediction.</p>
             </div>
             <span className={styles.exploreSymbol} aria-hidden="true">
               ✺
@@ -374,19 +385,16 @@ function Explore() {
           </article>
           <article className={`${styles.exploreCard} ${styles.exploreBlue}`}>
             <div className={styles.cardTop}>
-              <span>02 / YOUR CHART</span>
+              <span>02 / YOUR TIMING</span>
               <Sparkles size={24} />
             </div>
             <div>
               <h3>
-                See the wider
+                Consider the
                 <br />
-                picture.
+                timing.
               </h3>
-              <p>
-                Explore patterns and possibilities through an individual reading of your birth
-                details.
-              </p>
+              <p>Explore periods for action, patience, or reflection through your birth chart.</p>
             </div>
             <span className={styles.exploreSymbol} aria-hidden="true">
               ✧
@@ -399,11 +407,11 @@ function Explore() {
             </div>
             <div>
               <h3>
-                Leave with a more
+                See a clearer
                 <br />
-                considered view.
+                next step.
               </h3>
-              <p>Use the conversation to reflect on decisions with greater awareness.</p>
+              <p>Take away practical points to consider after the conversation.</p>
             </div>
             <span className={styles.exploreSymbol} aria-hidden="true">
               ✳
@@ -434,22 +442,21 @@ function Conversation() {
           />
         </div>
         <div className={styles.conversationCopy}>
-          <Eyebrow>One person. One real conversation.</Eyebrow>
           <h2 id="conversation-title">
             Your chart is the starting point. <em>Your life is the conversation.</em>
           </h2>
           <p>
-            Begin with what is happening now. Surbhi looks at your birth details alongside the
-            circumstances you share, so the reading stays close to the question you came with.
+            Surbhi uses your birth chart to explore timing and patterns, then discusses them in the
+            context of what you are actually going through.
           </p>
           <div className={styles.quoteBlock}>
             <span aria-hidden="true">✦</span>
             <p>
-              You do not need to arrive with a perfectly worded question. Start with what feels
-              important.
+              This is a personal conversation with Surbhi Gupta, arranged by her team after your
+              inquiry.
             </p>
           </div>
-          <PillLink>Tell us what is on your mind</PillLink>
+          <PillLink>Share Your Question</PillLink>
         </div>
       </div>
     </section>
@@ -465,12 +472,12 @@ function Steps() {
     >
       <div className="siteContainer">
         <div className={styles.centerHeading}>
-          <Eyebrow>Simple, personal and unhurried</Eyebrow>
+          <Eyebrow>Three clear steps</Eyebrow>
           <SectionTitle id="steps-title">
-            From your first question <em>to a conversation.</em>
+            How Your <em>Consultation Starts.</em>
           </SectionTitle>
           <p>
-            Three clear steps. The final appointment and any fee are confirmed with you personally.
+            Tell us what is on your mind, then arrange the conversation personally with the team.
           </p>
         </div>
         <div className={styles.stepGrid}>
@@ -484,10 +491,8 @@ function Steps() {
               />
               <span>01</span>
             </div>
-            <h3>Tell us about you</h3>
-            <p>
-              Share your contact and birth details, the subject on your mind and a preferred time.
-            </p>
+            <h3>Share your question</h3>
+            <p>Tell us what is on your mind and share your contact and birth details.</p>
           </article>
           <article className={styles.stepCard}>
             <div className={styles.stepImage}>
@@ -500,7 +505,7 @@ function Steps() {
               <span>02</span>
             </div>
             <h3>We review your inquiry</h3>
-            <p>The team reads your request and gets in touch to understand how best to help.</p>
+            <p>The team contacts you to confirm availability, format and any fee.</p>
           </article>
           <article className={styles.stepCard}>
             <div className={`${styles.stepImage} ${styles.stepVisual}`}>
@@ -512,10 +517,14 @@ function Steps() {
               </div>
               <span>03</span>
             </div>
-            <h3>Confirm together</h3>
-            <p>Agree on the format, time and any fee directly with the team before booking.</p>
+            <h3>Speak with Surbhi</h3>
+            <p>Have your one-on-one conversation at the time you confirm together.</p>
           </article>
         </div>
+        <p className={styles.stepNote}>
+          Sending an inquiry does not book a consultation. Your preferred time is confirmed
+          separately.
+        </p>
       </div>
     </section>
   );
@@ -532,16 +541,12 @@ function About() {
         <div className={styles.aboutCopy}>
           <Eyebrow>Meet your astrologer</Eyebrow>
           <h2 id="about-title">
-            Guidance with <em>Surbhi Gupta.</em>
+            Meet the person <em>you’ll speak with.</em>
           </h2>
           <p>
-            Behind every inquiry is a person looking for perspective. Surbhi brings an attentive,
-            individual approach to the questions people carry about relationships, work, family and
-            change.
-          </p>
-          <p>
-            This is a space for a considered reading and an honest conversation, shaped around your
-            own chart and circumstances.
+            Celebrity Astrologer Surbhi Gupta brings a personal approach to questions about
+            relationships, career, family and important life decisions. Your conversation is shaped
+            around your birth chart and the situation you bring.
           </p>
           <div className={styles.aboutValues}>
             <span>
@@ -551,7 +556,7 @@ function About() {
               <ShieldCheck size={20} /> Details handled with care
             </span>
           </div>
-          <PillLink gold>Request a consultation</PillLink>
+          <PillLink gold>Share Your Question</PillLink>
         </div>
         <div className={styles.aboutVisual}>
           <div className={styles.aboutPortrait}>
@@ -622,15 +627,17 @@ function Inquiry() {
           <div className={styles.centerHeading}>
             <Eyebrow light>Begin the conversation</Eyebrow>
             <h2 id="inquiry-title" className={styles.inquiryTitle}>
-              Tell us what brings you here.
+              Still thinking about the same question?
             </h2>
             <p className={styles.inquiryIntro}>
-              This inquiry is free. Share a preferred time and the team will contact you to discuss
-              availability, format and any fee. No appointment is booked by submitting this form.
+              Share what is on your mind and take the first step toward a personal conversation with
+              Surbhi. Her team will contact you to discuss availability, format and any fee.
             </p>
           </div>
-          <PillLink gold>Begin my free inquiry</PillLink>
-          <p className={styles.inquiryAside}>Three short steps · No payment · Personal follow-up</p>
+          <PillLink gold>Share Your Question</PillLink>
+          <p className={styles.inquiryAside}>
+            Free inquiry · No payment now · Appointment confirmed separately
+          </p>
         </div>
       </div>
     </section>
@@ -658,7 +665,9 @@ function Footer() {
           <a href="#consultations">Consultations</a>
           <a href="#how-it-works">How it works</a>
           <a href="#about">About Surbhi</a>
-          <InquiryTrigger className={styles.footerInquiryButton}>Send an inquiry</InquiryTrigger>
+          <InquiryTrigger className={styles.footerInquiryButton}>
+            Share your question
+          </InquiryTrigger>
         </nav>
         <nav className={styles.footerColumn} aria-label="Information">
           <h3>Information</h3>
@@ -688,12 +697,13 @@ export function LandingPage() {
       <Header />
       <main id="main-content">
         <Hero />
-        <SocialProof />
         <Topics />
-        <WhyConsult />
-        <Explore />
         <Conversation />
         <Steps />
+        <SocialProof />
+        <WhyConsult />
+        <Explore />
+        <CustomerMessages />
         <About />
         <Faq />
         <Inquiry />

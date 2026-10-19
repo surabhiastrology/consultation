@@ -1,13 +1,13 @@
 .section {
   overflow: hidden;
-  padding-block: clamp(62px, 5vw, 80px);
+  padding-block: clamp(44px, 4vw, 62px);
   border-top: 1px solid var(--color-border-gold);
   border-bottom: 1px solid var(--color-border-gold);
   background: linear-gradient(180deg, #fcf7ee, #f4ead6);
 }
 .heading {
   max-width: 850px;
-  margin: 0 auto 38px;
+  margin: 0 auto 26px;
   padding-inline: 22px;
   text-align: center;
 }
@@ -32,7 +32,7 @@
   margin: 0;
   color: var(--color-ink);
   font-family: var(--font-heading);
-  font-size: clamp(35px, 4vw, 54px);
+  font-size: clamp(32px, 3.5vw, 46px);
   font-weight: 500;
   line-height: 1.04;
 }
@@ -63,7 +63,7 @@
 }
 .personCard {
   position: relative;
-  width: clamp(140px, 12vw, 220px);
+  width: clamp(125px, 10vw, 170px);
   aspect-ratio: 3 / 4;
   flex: 0 0 auto;
   overflow: hidden;
@@ -76,8 +76,11 @@
   object-fit: cover;
 }
 .pressHeading {
-  margin-top: clamp(58px, 5vw, 76px);
-  margin-bottom: 34px;
+  margin-top: clamp(34px, 3vw, 48px);
+  margin-bottom: 22px;
+}
+.pressHeading h2 {
+  font-size: clamp(26px, 2.7vw, 34px);
 }
 .pressTrack {
   gap: 16px;
@@ -85,8 +88,8 @@
 }
 .pressCard {
   position: relative;
-  width: clamp(260px, 26vw, 380px);
-  aspect-ratio: 4 / 3;
+  width: clamp(220px, 22vw, 300px);
+  aspect-ratio: 16 / 10;
   flex: 0 0 auto;
   overflow: hidden;
   border: 1px solid #c6ad80;
@@ -133,7 +136,7 @@
 }
 @media (max-width: 680px) {
   .section {
-    padding-block: 56px;
+    padding-block: 44px;
   }
   .heading {
     margin-bottom: 28px;
@@ -145,14 +148,14 @@
     gap: 12px;
   }
   .personCard {
-    width: 140px;
+    width: 125px;
     border-radius: 14px;
   }
   .pressHeading {
-    margin-top: 57px;
+    margin-top: 34px;
   }
   .pressCard {
-    width: 260px;
+    width: 220px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -51,7 +51,7 @@ export function StickyInquiryBar() {
             <span>No slot booked yet</span>
           </div>
           <InquiryTrigger className={styles.button}>
-            <span>Enquire now</span>
+            <span>Ask Surbhi</span>
             <ArrowRight aria-hidden="true" size={21} strokeWidth={1.8} />
           </InquiryTrigger>
         </div>
