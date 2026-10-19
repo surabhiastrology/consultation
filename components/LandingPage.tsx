@@ -5,7 +5,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   CalendarDays,
-  Check,
   ChevronDown,
   Heart,
   MessageCircleHeart,
@@ -15,7 +14,6 @@ import {
 import { InquiryModalProvider, InquiryTrigger } from "./InquiryModal";
 import { SocialProof } from "./SocialProof";
 import { StickyInquiryBar } from "./StickyInquiryBar";
-import { TrustNotices } from "./TrustNotices";
 import { FloatingWhatsApp } from "./FloatingWhatsApp";
 import styles from "./LandingPage.module.css";
 
@@ -179,15 +177,12 @@ function Hero() {
       <div className={styles.heroGlow} aria-hidden="true" />
       <div className={`siteContainer ${styles.heroGrid}`}>
         <div className={styles.heroCopy}>
-          <Eyebrow>One-on-one astrology consultation</Eyebrow>
           <h1 id="hero-title">
-            Bring the question <span className={styles.heroGold}>you keep</span>{" "}
-            <em>coming back to.</em>
+            Sometimes You Just Need Someone to Help You <em>See Clearly</em>
           </h1>
           <p className={styles.heroLead}>
-            Talk through what is happening, explore your birth chart, and consider the choices ahead
-            with Surbhi Gupta. Start with a free inquiry; the team will arrange the conversation
-            personally.
+            Talk Directly with Celebrity Astrologer Surbhi Gupta About the Question You Can’t Stop
+            Thinking About
           </p>
           <div className={styles.heroActions}>
             <PillLink>Share your question</PillLink>
@@ -195,47 +190,65 @@ function Hero() {
               Explore consultations <ArrowDownRight size={18} />
             </a>
           </div>
-          <div className={styles.heroTopics} aria-label="Consultation topics">
-            <span>Love &amp; relationships</span>
-            <span>Marriage</span>
-            <span>Career</span>
-            <span>Family</span>
-            <span>Wealth</span>
+          <div className={styles.heroTrust} aria-label="What to expect from your consultation">
+            <div className={styles.heroTrustItem}>
+              <span className={styles.heroTrustIcon} aria-hidden="true">
+                <MessageCircleHeart size={24} strokeWidth={1.7} />
+              </span>
+              <p>
+                <strong>One-to-one</strong>
+                <span>With Surbhi Gupta</span>
+              </p>
+            </div>
+            <div className={styles.heroTrustItem}>
+              <span className={styles.heroTrustIcon} aria-hidden="true">
+                <Sparkles size={24} strokeWidth={1.7} />
+              </span>
+              <p>
+                <strong>Your birth chart</strong>
+                <span>Personal context</span>
+              </p>
+            </div>
+            <div className={styles.heroTrustItem}>
+              <span className={styles.heroTrustIcon} aria-hidden="true">
+                <CalendarDays size={24} strokeWidth={1.7} />
+              </span>
+              <p>
+                <strong>Personally arranged</strong>
+                <span>By her team</span>
+              </p>
+            </div>
           </div>
-          <p className={styles.microcopy}>
-            <Check size={15} aria-hidden="true" /> Free inquiry <span aria-hidden="true">·</span>{" "}
-            Your preferred time is a request, not a booking
-          </p>
         </div>
         <div className={styles.heroVisual}>
-          <div className={styles.heroArch}>
-            <Image
-              src="/images/surbhi-gupta.webp"
-              alt="Surbhi Gupta, astrologer and founder of Surabhi Astrology"
-              fill
-              loading="eager"
-              fetchPriority="high"
-              sizes="(max-width: 800px) 90vw, 47vw"
-              className={styles.heroPortrait}
-            />
-          </div>
+          <div className={styles.heroArch} aria-hidden="true" />
+          <Image
+            src="/images/surbhi-namaste-cutout-refined.webp"
+            alt="Surbhi Gupta greeting visitors with folded hands"
+            width={820}
+            height={1610}
+            loading="eager"
+            fetchPriority="high"
+            sizes="(max-width: 800px) 52vw, 27vw"
+            className={styles.heroPortrait}
+          />
           <div className={styles.heroOrbit} aria-hidden="true">
             ✧
           </div>
-          <div className={styles.heroNote}>
-            <span>✦</span>
+          <div className={styles.heroNote} aria-hidden="true">
+            <Sparkles size={27} strokeWidth={1.5} />
             <p>
-              Bring the whole story.
+              Personal
               <br />
-              <strong>Begin with a conversation.</strong>
+              <strong>guidance</strong>
             </p>
           </div>
           <div className={styles.heroSeal} aria-hidden="true">
-            <Sparkles size={24} />
+            <MessageCircleHeart size={27} strokeWidth={1.5} />
             <span>
-              PERSONAL
+              One-on-one
               <br />
-              GUIDANCE
+              consultation
             </span>
           </div>
         </div>
@@ -688,7 +701,6 @@ export function LandingPage() {
       <Footer />
       <StickyInquiryBar />
       <FloatingWhatsApp />
-      <TrustNotices />
     </InquiryModalProvider>
   );
 }

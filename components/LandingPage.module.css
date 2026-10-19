@@ -251,18 +251,6 @@
   text-decoration-color: #c8a84b;
   text-underline-offset: 5px;
 }
-.microcopy {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 16px 0 0;
-  color: #685844;
-  font-size: 10px;
-}
-.microcopy svg {
-  color: #3a8a5d;
-}
 .heroVisual {
   position: relative;
   height: min(540px, 45vw);
@@ -1361,16 +1349,18 @@
   background: #fcf7ee;
 }
 .hero::before {
-  inset: 0 auto 0 0;
-  width: 72%;
-  opacity: 0.92;
-  background: url("/images/portal-hero-atmosphere.png") left center / auto 100% no-repeat;
-  mask-image: linear-gradient(to right, #000 42%, transparent 100%);
+  inset: 0;
+  width: 100%;
+  opacity: 1;
+  background:
+    linear-gradient(90deg, #fffaf3bd 0%, #fffaf38c 34%, #fffaf300 68%),
+    url("/images/consultation-hero-atmosphere.webp") center / cover no-repeat;
+  mask-image: none;
 }
 .heroGlow {
   right: -40px;
   top: -60px;
-  background: #f2c2774d;
+  background: #fff2db38;
 }
 .heroGrid {
   grid-template-columns: minmax(0, 1.07fr) minmax(0, 0.93fr);
@@ -1392,9 +1382,6 @@
   display: inline;
   color: #8b1e1e;
 }
-.heroGold {
-  color: #ab500f;
-}
 .heroLead {
   max-width: 650px;
   margin: 20px 0 24px;
@@ -1402,51 +1389,176 @@
   font-size: 18px;
   line-height: 1.55;
 }
-.heroTopics {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-  max-width: 690px;
-  margin-top: 20px;
+.heroTrust {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 760px;
+  margin-top: 28px;
+  overflow: hidden;
+  border: 1px solid #bd8e52;
+  border-radius: 16px;
+  background: linear-gradient(112deg, #601219, #8c2b1d 55%, #692026);
+  box-shadow: 0 13px 27px #66172024;
 }
-.heroTopics span {
-  padding: 7px 11px;
-  border: 1px solid #e8d8b8;
-  border-radius: 999px;
-  background: #fffdf8c9;
-  color: #66462d;
+.heroTrustItem {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 13px;
+  color: #fff8ed;
+}
+.heroTrustItem + .heroTrustItem {
+  border-left: 1px solid #f3d7a36b;
+}
+.heroTrustIcon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff9ee;
+  color: #a76018;
+  box-shadow: 0 5px 12px #2b07051c;
+}
+.heroTrustItem p {
+  min-width: 0;
+  margin: 0;
   font-size: 12px;
-  font-weight: 600;
+  line-height: 1.35;
+}
+.heroTrustItem strong,
+.heroTrustItem p span {
+  display: block;
+}
+.heroTrustItem strong {
+  color: #ffe0a4;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 700;
 }
 .heroVisual {
-  height: min(570px, 44vw);
-  min-height: 450px;
+  height: clamp(560px, 48vw, 680px);
+  min-height: 0;
+  isolation: isolate;
+  overflow: visible;
+}
+.heroVisual::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -7%;
+  top: 17%;
+  width: 49%;
+  aspect-ratio: 1;
+  border: 1px solid #c79538a6;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, #c7953800 0deg 20deg, #c7953845 20deg 21deg);
+  box-shadow:
+    0 0 0 22px #c7953810,
+    0 0 0 44px #c7953808;
+}
+.heroVisual::after {
+  content: "✦";
+  position: absolute;
+  right: 0;
+  bottom: 13%;
+  color: #bb852c;
+  font-size: 26px;
 }
 .heroArch {
-  width: 72%;
-  height: 82%;
-  border: 8px solid #251916;
-  border-radius: 32px;
-  outline: 2px solid #c8a84b;
-  background: #2b1715;
-  box-shadow: 0 22px 55px #3d160052;
-  transform: rotate(5deg);
+  position: absolute;
+  z-index: 0;
+  right: 8%;
+  bottom: 0;
+  width: 76%;
+  height: 96%;
+  border: 2px solid #c99134;
+  border-radius: 48% 48% 4px 4px / 31% 31% 4px 4px;
+  outline: 12px solid #fff7e3b8;
+  background: linear-gradient(125deg, #fff8e6a6, #f0d1a288 65%, #ffedd0a3);
+  backdrop-filter: blur(2px);
+  box-shadow: 0 22px 50px #8f581f20;
+  transform: none;
+}
+.heroArch::before {
+  content: none;
 }
 .heroArch::after {
-  background: linear-gradient(to top, #1e0a0950, transparent 36%);
+  background: linear-gradient(to top, #fff4dab8, transparent 28%);
 }
 .heroPortrait {
-  object-position: 55% 35%;
+  position: absolute;
+  z-index: 2;
+  left: 54%;
+  right: auto;
+  bottom: 0;
+  width: auto;
+  height: 96%;
+  max-width: 90%;
+  object-fit: contain;
+  object-position: center bottom;
+  mask-image: linear-gradient(to right, #000 0%, #000 95%, transparent 100%);
+  filter: drop-shadow(10px 10px 13px #6e3d1c26);
+  transform: translateX(-50%);
 }
 .heroNote {
-  left: -3%;
-  bottom: 24px;
-  border-radius: 14px;
-  transform: rotate(-4deg);
+  z-index: 3;
+  left: -1%;
+  top: 24%;
+  bottom: auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 148px;
+  min-height: 128px;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 20px;
+  background: #fffcf3ed;
+  text-align: center;
+  transform: none;
+}
+.heroNote svg {
+  color: #b77a20;
+}
+.heroNote p {
+  font-size: 23px;
+  line-height: 0.98;
+}
+.heroNote strong {
+  color: #2a1400;
 }
 .heroSeal {
-  right: 1%;
+  z-index: 3;
+  right: -5%;
+  top: 50%;
+  width: 164px;
+  height: 94px;
+  flex-direction: row;
+  gap: 9px;
+  padding: 13px;
+  border: 1px solid #f4dfb1;
+  border-radius: 20px;
+  outline: none;
+  background: #fffcf3f2;
+  color: #b77a20;
+  text-align: left;
+}
+.heroSeal span {
+  color: #2a1400;
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 0.98;
+}
+.heroOrbit {
+  z-index: 3;
   top: 11%;
+  left: 4%;
+  font-size: 47px;
 }
 .topicsSection {
   background: radial-gradient(circle at 50% 0%, #fffdf9, transparent 46%), #fcf7ee;
@@ -1679,9 +1791,9 @@
   }
   .hero::before {
     width: 100%;
-    opacity: 0.6;
-    background-position: left center;
-    mask-image: linear-gradient(to bottom, #000, transparent 90%);
+    opacity: 0.82;
+    background-position: 34% center;
+    mask-image: linear-gradient(to bottom, #000 0%, #000 48%, transparent 93%);
   }
   .heroGrid {
     grid-template-columns: 1fr;
@@ -1701,12 +1813,9 @@
   .heroArch {
     width: 72%;
     height: 86%;
-  }
-  .heroTopics {
-    gap: 6px;
-  }
-  .heroTopics span {
-    font-size: 11px;
+    background:
+      linear-gradient(125deg, #fff8e6a6, #f0d1a288 65%, #ffedd0a3),
+      url("/images/consultation-hero-atmosphere.webp") 73% center / auto 100% no-repeat;
   }
   .pillButton {
     min-height: 58px;
@@ -1964,4 +2073,110 @@
 }
 .footerInquiryButton:hover {
   color: var(--color-maroon);
+}
+
+@media (max-width: 1000px) {
+  .heroVisual {
+    height: 540px;
+  }
+  .heroNote {
+    width: 120px;
+    min-height: 105px;
+  }
+  .heroNote p {
+    font-size: 20px;
+  }
+  .heroSeal {
+    right: -2%;
+    width: 137px;
+    height: 78px;
+  }
+  .heroSeal span {
+    font-size: 17px;
+  }
+}
+@media (max-width: 900px) {
+  .heroGrid {
+    grid-template-columns: 1fr;
+  }
+  .heroVisual {
+    width: min(100%, 600px);
+    margin-inline: auto;
+  }
+}
+@media (max-width: 800px) {
+  .heroVisual {
+    height: clamp(440px, 77vw, 580px);
+    margin-top: 34px;
+  }
+  .heroArch {
+    right: 12%;
+    width: 68%;
+  }
+  .heroNote {
+    left: 9%;
+  }
+  .heroSeal {
+    right: 5%;
+  }
+}
+@media (max-width: 600px) {
+  .heroTrust {
+    max-width: 420px;
+    grid-template-columns: 1fr;
+  }
+  .heroTrustItem {
+    padding: 11px 15px;
+  }
+  .heroTrustItem + .heroTrustItem {
+    border-top: 1px solid #f3d7a36b;
+    border-left: 0;
+  }
+  .heroTrustIcon {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+  }
+}
+@media (max-width: 560px) {
+  .heroVisual {
+    height: clamp(390px, 110vw, 470px);
+    margin-top: 25px;
+  }
+  .heroArch {
+    right: 6%;
+    width: 79%;
+    outline-width: 7px;
+  }
+  .heroNote {
+    left: 0;
+    top: 25%;
+    width: 106px;
+    min-height: 94px;
+    gap: 3px;
+    padding: 9px;
+    border-radius: 13px;
+  }
+  .heroNote svg {
+    width: 20px;
+    height: 20px;
+  }
+  .heroNote p {
+    font-size: 17px;
+  }
+  .heroSeal {
+    right: -2%;
+    top: 55%;
+    width: 113px;
+    height: 65px;
+    padding: 7px;
+    border-radius: 12px;
+  }
+  .heroSeal svg {
+    width: 19px;
+    height: 19px;
+  }
+  .heroSeal span {
+    font-size: 14px;
+  }
 }

@@ -33,7 +33,7 @@ export function StickyInquiryBar() {
         <div className={styles.inner}>
           <div className={styles.portrait} aria-hidden="true">
             <Image
-              src="/images/surbhi-gupta.webp"
+              src="/images/surbhi-sticky-namaste.webp"
               alt=""
               width={120}
               height={120}

@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Karla } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { TrackingConsent } from "@/components/TrackingConsent";
 import { Providers } from "./providers";
 
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+const cormorant = localFont({
+  src: "../assets/fonts/cormorant-garamond-latin.woff2",
+  weight: "300 700",
   variable: "--font-serif",
   display: "swap",
 });
-const karla = Karla({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+const karla = localFont({
+  src: "../assets/fonts/karla-latin.woff2",
+  weight: "300 700",
   variable: "--font-sans",
   display: "swap",
 });
