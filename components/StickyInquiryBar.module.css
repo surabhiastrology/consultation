@@ -1,0 +1,247 @@
+.wrapper {
+  position: fixed;
+  z-index: 200;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateY(calc(100% + 80px));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 300ms ease-out,
+    opacity 300ms ease-out;
+}
+.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.bar {
+  position: relative;
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid #d9ad5f;
+  background: linear-gradient(105deg, #650918 0%, #8b1024 49%, #650918 100%);
+  box-shadow:
+    0 -8px 28px #2a0e002e,
+    inset 0 -3px #bc872f;
+}
+.inner {
+  display: grid;
+  width: min(100%, 1440px);
+  min-height: 94px;
+  grid-template-columns: 108px minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 22px;
+  margin-inline: auto;
+  padding: 9px 36px;
+}
+.portrait {
+  position: relative;
+  align-self: stretch;
+  width: 108px;
+}
+.portrait img {
+  position: absolute;
+  bottom: -4px;
+  left: 4px;
+  width: 104px;
+  height: 104px;
+  border: 2px solid #e2c06a;
+  border-radius: 52px 52px 12px 12px;
+  object-fit: cover;
+  object-position: 50% 28%;
+  box-shadow: 1px 5px 8px #1f080359;
+}
+.copy {
+  min-width: 0;
+}
+.title {
+  margin: 0;
+  color: #fff8ed;
+  font-family: var(--font-heading);
+  font-size: clamp(17px, 1.8vw, 26px);
+  font-weight: 600;
+  line-height: 1.18;
+}
+.detail {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 5px 0 0;
+  color: #f5d98a;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.detail svg {
+  flex: 0 0 auto;
+  color: #28cf72;
+}
+.status {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 22px;
+  border-left: 1px solid #f5d98a42;
+  white-space: nowrap;
+}
+.status strong {
+  color: #f5d98a;
+  font-size: 23px;
+  line-height: 1;
+}
+.status span {
+  color: #fff8edbd;
+  font-size: 13px;
+}
+.button {
+  position: relative;
+  display: inline-flex;
+  min-width: 168px;
+  min-height: 54px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  overflow: hidden;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: linear-gradient(110deg, #deb85d, #efcf7a);
+  box-shadow: 0 7px 16px #2506093b;
+  color: #2a0e00;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
+  transition:
+    transform 180ms ease,
+    filter 180ms ease;
+  cursor: pointer;
+}
+.button::after {
+  position: absolute;
+  inset: 0;
+  transform: translateX(-160%) skewX(-18deg);
+  background: linear-gradient(120deg, transparent 20%, #ffffff5c 50%, transparent 80%);
+  content: "";
+  animation: shine 4s infinite linear;
+}
+.button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.04);
+}
+.button:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+.button span,
+.button svg {
+  position: relative;
+  z-index: 1;
+}
+@keyframes shine {
+  to {
+    transform: translateX(260%) skewX(-18deg);
+  }
+}
+@media (max-width: 1000px) {
+  .inner {
+    grid-template-columns: 88px minmax(0, 1fr) auto auto;
+    gap: 12px;
+    padding-inline: 18px;
+  }
+  .portrait {
+    width: 88px;
+  }
+  .portrait img {
+    left: -3px;
+    width: 88px;
+    height: 96px;
+  }
+  .status {
+    padding-left: 13px;
+  }
+  .button {
+    min-width: 125px;
+  }
+}
+@media (max-width: 639px) {
+  .inner {
+    min-height: 77px;
+    grid-template-columns: 70px minmax(0, 1fr) auto;
+    gap: 8px;
+    padding: 7px 9px 7px 6px;
+  }
+  .portrait {
+    width: 70px;
+  }
+  .portrait img {
+    bottom: -3px;
+    left: -5px;
+    width: 75px;
+    height: 84px;
+    border-radius: 38px 38px 9px 9px;
+  }
+  .title {
+    font-size: 15px;
+    line-height: 1.1;
+  }
+  .detail {
+    align-items: flex-start;
+    gap: 4px;
+    margin-top: 5px;
+    font-size: 11px;
+    line-height: 1.1;
+  }
+  .detail svg {
+    width: 13px;
+    height: 13px;
+  }
+  .status {
+    display: none;
+  }
+  .button {
+    min-width: 96px;
+    min-height: 48px;
+    gap: 4px;
+    padding: 7px 8px;
+    border-radius: 17px;
+    font-size: 12px;
+  }
+  .button svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+@media (max-width: 360px) {
+  .inner {
+    grid-template-columns: 58px minmax(0, 1fr) auto;
+    gap: 6px;
+  }
+  .portrait {
+    width: 58px;
+  }
+  .portrait img {
+    width: 64px;
+    height: 73px;
+  }
+  .title {
+    font-size: 12px;
+  }
+  .detail {
+    font-size: 9px;
+  }
+  .button {
+    min-width: 85px;
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wrapper,
+  .button {
+    transition: none;
+  }
+  .button::after {
+    animation: none;
+  }
+}

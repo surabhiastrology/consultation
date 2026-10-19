@@ -1,0 +1,166 @@
+.section {
+  overflow: hidden;
+  padding-block: clamp(62px, 5vw, 80px);
+  border-top: 1px solid var(--color-border-gold);
+  border-bottom: 1px solid var(--color-border-gold);
+  background: linear-gradient(180deg, #fcf7ee, #f4ead6);
+}
+.heading {
+  max-width: 850px;
+  margin: 0 auto 38px;
+  padding-inline: 22px;
+  text-align: center;
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin: 0 0 15px;
+  color: #a3631d;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.23em;
+  text-transform: uppercase;
+}
+.eyebrow span {
+  width: 32px;
+  height: 1px;
+  background: #c8a84b;
+}
+.heading h2 {
+  margin: 0;
+  color: var(--color-ink);
+  font-family: var(--font-heading);
+  font-size: clamp(35px, 4vw, 54px);
+  font-weight: 500;
+  line-height: 1.04;
+}
+.heading h2 em {
+  color: var(--color-maroon);
+  font-style: normal;
+}
+.heading h2 span {
+  display: block;
+  margin-top: 5px;
+  color: var(--color-amber-ink);
+}
+.marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.track {
+  display: flex;
+  width: max-content;
+  animation: drift 46s linear infinite;
+}
+.marquee:hover .track {
+  animation-play-state: paused;
+}
+.peopleTrack {
+  gap: 17px;
+  padding-right: 17px;
+}
+.personCard {
+  position: relative;
+  width: clamp(140px, 12vw, 220px);
+  aspect-ratio: 3 / 4;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 1px solid #d8c49a;
+  border-radius: 18px;
+  background: #2a0e00;
+  box-shadow: 0 12px 25px #3d160026;
+}
+.personCard img {
+  object-fit: cover;
+}
+.pressHeading {
+  margin-top: clamp(58px, 5vw, 76px);
+  margin-bottom: 34px;
+}
+.pressTrack {
+  gap: 16px;
+  padding-right: 16px;
+}
+.pressCard {
+  position: relative;
+  width: clamp(260px, 26vw, 380px);
+  aspect-ratio: 4 / 3;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 1px solid #c6ad80;
+  border-radius: 16px;
+  background: #2a0e00;
+  box-shadow: 0 11px 25px #2a140033;
+}
+.pressCard img {
+  object-fit: cover;
+  object-position: center top;
+}
+.pressCard::after {
+  position: absolute;
+  inset: 43% 0 0;
+  background: linear-gradient(transparent, #130802ed);
+  content: "";
+}
+.pressCaption {
+  position: absolute;
+  z-index: 1;
+  right: 17px;
+  bottom: 15px;
+  left: 17px;
+  color: #fff9ed;
+}
+.pressCaption small {
+  display: block;
+  margin-bottom: 2px;
+  color: #e2c06a;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.pressCaption strong {
+  font-family: var(--font-heading);
+  font-size: 23px;
+  font-weight: 500;
+}
+@keyframes drift {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (max-width: 680px) {
+  .section {
+    padding-block: 56px;
+  }
+  .heading {
+    margin-bottom: 28px;
+  }
+  .heading h2 {
+    font-size: clamp(32px, 8vw, 43px);
+  }
+  .peopleTrack {
+    gap: 12px;
+  }
+  .personCard {
+    width: 140px;
+    border-radius: 14px;
+  }
+  .pressHeading {
+    margin-top: 57px;
+  }
+  .pressCard {
+    width: 260px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto;
+    mask-image: none;
+  }
+  .track {
+    animation: none;
+  }
+}
