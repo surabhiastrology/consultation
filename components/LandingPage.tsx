@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowDownRight,
   ArrowRight,
   ArrowUpRight,
   CalendarDays,
@@ -197,38 +196,6 @@ function Hero() {
           </p>
           <div className={styles.heroActions}>
             <PillLink>Share Your Question</PillLink>
-            <a href="#how-it-works" className={styles.textLink}>
-              How Consultation Works <ArrowDownRight size={18} />
-            </a>
-          </div>
-          <div className={styles.heroTrust} aria-label="What to expect from your consultation">
-            <div className={styles.heroTrustItem}>
-              <span className={styles.heroTrustIcon} aria-hidden="true">
-                <MessageCircleHeart size={24} strokeWidth={1.7} />
-              </span>
-              <p>
-                <strong>One-to-one</strong>
-                <span>With Surbhi Gupta</span>
-              </p>
-            </div>
-            <div className={styles.heroTrustItem}>
-              <span className={styles.heroTrustIcon} aria-hidden="true">
-                <Sparkles size={24} strokeWidth={1.7} />
-              </span>
-              <p>
-                <strong>Your birth chart</strong>
-                <span>Personal context</span>
-              </p>
-            </div>
-            <div className={styles.heroTrustItem}>
-              <span className={styles.heroTrustIcon} aria-hidden="true">
-                <CalendarDays size={24} strokeWidth={1.7} />
-              </span>
-              <p>
-                <strong>Personally arranged</strong>
-                <span>By her team</span>
-              </p>
-            </div>
           </div>
         </div>
         <div className={styles.heroVisual}>
@@ -261,6 +228,35 @@ function Hero() {
               <br />
               consultation
             </span>
+          </div>
+        </div>
+        <div className={styles.heroTrust} aria-label="What to expect from your consultation">
+          <div className={styles.heroTrustItem}>
+            <span className={styles.heroTrustIcon} aria-hidden="true">
+              <MessageCircleHeart size={24} strokeWidth={1.7} />
+            </span>
+            <p>
+              <strong>One-to-one</strong>
+              <span>With Surbhi Gupta</span>
+            </p>
+          </div>
+          <div className={styles.heroTrustItem}>
+            <span className={styles.heroTrustIcon} aria-hidden="true">
+              <Sparkles size={24} strokeWidth={1.7} />
+            </span>
+            <p>
+              <strong>Your birth chart</strong>
+              <span>Personal context</span>
+            </p>
+          </div>
+          <div className={styles.heroTrustItem}>
+            <span className={styles.heroTrustIcon} aria-hidden="true">
+              <CalendarDays size={24} strokeWidth={1.7} />
+            </span>
+            <p>
+              <strong>Personally arranged</strong>
+              <span>By her team</span>
+            </p>
           </div>
         </div>
       </div>
