@@ -15,45 +15,65 @@ import {
 import { InquiryModalProvider, InquiryTrigger } from "./InquiryModal";
 import { SocialProof } from "./SocialProof";
 import { StickyInquiryBar } from "./StickyInquiryBar";
+import { TrustNotices } from "./TrustNotices";
 import { FloatingWhatsApp } from "./FloatingWhatsApp";
 import styles from "./LandingPage.module.css";
 
 const topics = [
   {
     title: "Love & relationships",
-    copy: "Bring clarity to a connection, a recurring pattern, or a decision of the heart.",
+    copy: "A connection feels uncertain, or the same question keeps returning. Bring the story behind it.",
     image: "/images/love-relationships.webp",
     alt: "A couple in a quiet moment together",
   },
   {
     title: "Career & direction",
-    copy: "Look at the choices, transitions and timing shaping your working life.",
+    copy: "A role, a risk, or a fresh start: talk through the choice in front of you.",
     image: "/images/career-business.webp",
     alt: "A professional considering her next step",
   },
   {
     title: "Marriage & compatibility",
-    copy: "Understand the questions around commitment and the future you are building.",
+    copy: "Explore commitment, expectations, and the future you are considering together.",
     image: "/images/marriage-matchmaking.webp",
     alt: "A couple sharing a wedding moment",
   },
   {
     title: "Family & wellbeing",
-    copy: "Find a more considered perspective on home, family and personal balance.",
+    copy: "Make room for the questions about home, family, and your own sense of balance.",
     image: "/images/child-family.webp",
     alt: "A family sharing time together",
   },
   {
     title: "Money & stability",
-    copy: "Explore the wider picture behind financial choices and changing priorities.",
+    copy: "Look at changing priorities and the sense of security you are trying to build.",
     image: "/images/wealth-finance.webp",
     alt: "A warmly lit space symbolising stability",
   },
   {
     title: "A question of your own",
-    copy: "You do not have to fit your story into a category. Tell us what is on your mind.",
+    copy: "Your question does not need a label. Tell us what has been on your mind.",
     image: "/images/health-wellbeing.webp",
     alt: "A woman taking a reflective pause",
+  },
+];
+
+const reasonsToTalk = [
+  {
+    title: "A choice is weighing on you.",
+    copy: "A job change, a commitment, a move: give the decision the time and context it deserves.",
+  },
+  {
+    title: "Too many opinions are in the room.",
+    copy: "Bring your own questions forward and talk through what matters to you.",
+  },
+  {
+    title: "A pattern keeps returning.",
+    copy: "Explore what you have noticed and where your birth chart may offer perspective.",
+  },
+  {
+    title: "You want to ask what comes next.",
+    copy: "A live conversation leaves room to pause, clarify, and follow up.",
   },
 ];
 
@@ -159,16 +179,18 @@ function Hero() {
       <div className={styles.heroGlow} aria-hidden="true" />
       <div className={`siteContainer ${styles.heroGrid}`}>
         <div className={styles.heroCopy}>
+          <Eyebrow>One-on-one astrology consultation</Eyebrow>
           <h1 id="hero-title">
-            Discover what your birth chart <span className={styles.heroGold}>reveals about</span>{" "}
-            <em>your path.</em>
+            Bring the question <span className={styles.heroGold}>you keep</span>{" "}
+            <em>coming back to.</em>
           </h1>
           <p className={styles.heroLead}>
-            Get personal astrology guidance from Surbhi Gupta for the questions shaping your life.
-            Start with a free inquiry; the conversation is arranged with you personally.
+            Talk through what is happening, explore your birth chart, and consider the choices ahead
+            with Surbhi Gupta. Start with a free inquiry; the team will arrange the conversation
+            personally.
           </p>
           <div className={styles.heroActions}>
-            <PillLink>Ask about a consultation</PillLink>
+            <PillLink>Share your question</PillLink>
             <a href="#consultations" className={styles.textLink}>
               Explore consultations <ArrowDownRight size={18} />
             </a>
@@ -203,9 +225,9 @@ function Hero() {
           <div className={styles.heroNote}>
             <span>✦</span>
             <p>
-              A space to ask.
+              Bring the whole story.
               <br />
-              <strong>A way to see more clearly.</strong>
+              <strong>Begin with a conversation.</strong>
             </p>
           </div>
           <div className={styles.heroSeal} aria-hidden="true">
@@ -236,8 +258,8 @@ function Topics() {
             What would you like <em>clarity on?</em>
           </SectionTitle>
           <p>
-            Every person arrives with a different question. These are some of the conversations we
-            can begin together.
+            Choose the area closest to your question. You can share the details and anything that
+            does not fit a category in your inquiry.
           </p>
         </div>
         <div className={styles.topicGrid}>
@@ -265,6 +287,40 @@ function Topics() {
         <div className={styles.centerAction}>
           <PillLink>Begin a free inquiry</PillLink>
           <p>We will help you decide the best focus during follow-up.</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function WhyConsult() {
+  return (
+    <section className={`${styles.whySection} sectionSpace`} aria-labelledby="why-title">
+      <div className={`siteContainer ${styles.whyGrid}`}>
+        <div className={styles.whyIntro}>
+          <Eyebrow light>Why speak one-on-one</Eyebrow>
+          <h2 id="why-title">
+            Come with a question. <em>Bring the whole story.</em>
+          </h2>
+          <p>
+            A personal reading gives you room to explain the situation, ask what follows, and
+            consider your next step with care.
+          </p>
+          <PillLink gold>Begin a free inquiry</PillLink>
+          <span className={styles.whyMark} aria-hidden="true">
+            ✧
+          </span>
+        </div>
+        <div className={styles.whyList}>
+          {reasonsToTalk.map((reason, index) => (
+            <article className={styles.whyItem} key={reason.title}>
+              <span className={styles.whyNumber}>{String(index + 1).padStart(2, "0")}</span>
+              <div>
+                <h3>{reason.title}</h3>
+                <p>{reason.copy}</p>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>
@@ -367,17 +423,17 @@ function Conversation() {
         <div className={styles.conversationCopy}>
           <Eyebrow>One person. One real conversation.</Eyebrow>
           <h2 id="conversation-title">
-            A little more than <em>“what will happen?”</em>
+            Your chart is the starting point. <em>Your life is the conversation.</em>
           </h2>
           <p>
-            There are moments when a generic answer does not feel enough. A personal consultation
-            gives your question the time, context and attention it deserves.
+            Begin with what is happening now. Surbhi looks at your birth details alongside the
+            circumstances you share, so the reading stays close to the question you came with.
           </p>
           <div className={styles.quoteBlock}>
-            <span aria-hidden="true">“</span>
+            <span aria-hidden="true">✦</span>
             <p>
-              The most useful question is often the one that helps you understand your path more
-              clearly.
+              You do not need to arrive with a perfectly worded question. Start with what feels
+              important.
             </p>
           </div>
           <PillLink>Tell us what is on your mind</PillLink>
@@ -621,6 +677,7 @@ export function LandingPage() {
         <Hero />
         <SocialProof />
         <Topics />
+        <WhyConsult />
         <Explore />
         <Conversation />
         <Steps />
@@ -631,6 +688,7 @@ export function LandingPage() {
       <Footer />
       <StickyInquiryBar />
       <FloatingWhatsApp />
+      <TrustNotices />
     </InquiryModalProvider>
   );
 }

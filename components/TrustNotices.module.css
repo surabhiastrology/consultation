@@ -1,0 +1,119 @@
+.notice {
+  position: fixed;
+  z-index: 199;
+  bottom: calc(112px + env(safe-area-inset-bottom));
+  left: 22px;
+  display: grid;
+  grid-template-columns: 43px minmax(0, 1fr);
+  gap: 12px;
+  width: min(360px, calc(100vw - 110px));
+  padding: 14px 48px 14px 14px;
+  border: 1px solid var(--color-gold);
+  border-radius: 17px;
+  background: var(--color-paper);
+  box-shadow: 0 13px 38px #2a14002e;
+  animation: noticeIn 240ms ease-out both;
+}
+.icon {
+  display: grid;
+  width: 43px;
+  height: 43px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-sand);
+  color: var(--color-maroon);
+}
+.copy {
+  min-width: 0;
+}
+.label {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--color-amber-ink);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.copy strong {
+  display: block;
+  color: var(--color-deep-maroon);
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.05;
+}
+.copy p {
+  margin: 5px 0 0;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.close {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+}
+.close:hover {
+  background: var(--color-sand);
+  color: var(--color-deep-maroon);
+}
+.close:focus-visible {
+  outline: 3px solid var(--color-maroon);
+  outline-offset: 2px;
+}
+@keyframes noticeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 639px) {
+  .notice {
+    right: 12px;
+    bottom: calc(160px + env(safe-area-inset-bottom));
+    left: 12px;
+    width: auto;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 9px;
+    padding: 10px 46px 10px 10px;
+    border-radius: 14px;
+  }
+  .icon {
+    width: 34px;
+    height: 34px;
+  }
+  .icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  .copy strong {
+    font-size: 18px;
+  }
+  .copy p {
+    font-size: 11px;
+  }
+  .close {
+    top: 2px;
+    right: 2px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .notice {
+    animation: none;
+  }
+}
