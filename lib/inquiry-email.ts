@@ -46,6 +46,8 @@ function emailFrame({
   const logo = asset(baseUrl, "/images/surbhi-email-logo.png");
   const portrait = asset(baseUrl, "/images/surbhi-email-office.jpg");
   const home = escapeHtml(new URL("/", baseUrl).href);
+  const whatsapp = "https://wa.me/919251151330";
+  const instagram = "https://www.instagram.com/celebrity_astrologer_surbhi/";
 
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(title)}</title></head>
 <body style="margin:0;padding:0;background:${colors.ivory};color:${colors.ink};font-family:Arial,Helvetica,sans-serif;">
@@ -63,6 +65,7 @@ function emailFrame({
 <tr><td style="padding:23px 30px 27px;border-top:1px solid ${colors.border};background:#f8f0e3;text-align:center;">
 <p style="margin:0 0 9px;color:${colors.deepMaroon};font-family:Georgia,'Times New Roman',serif;font-size:20px;">Surabhi Astrology</p>
 <p style="margin:0;color:${colors.muted};font-size:12px;line-height:1.6;">Personal guidance, arranged with care.<br><a href="${home}" style="color:${colors.maroon};text-decoration:underline;">Visit the consultation site</a></p>
+<p style="margin:15px 0 0;color:${colors.muted};font-size:12px;line-height:1.6;"><a href="${whatsapp}" style="color:${colors.maroon};text-decoration:underline;">WhatsApp</a><span style="padding:0 12px;color:${colors.gold};">✦</span><a href="${instagram}" style="color:${colors.maroon};text-decoration:underline;">Instagram</a></p>
 </td></tr></table>
 <p style="max-width:640px;margin:16px 0 0;color:#776e62;font-size:11px;line-height:1.5;text-align:center;">This is an email about a consultation inquiry submitted through Surabhi Astrology.</p>
 </td></tr></table></body></html>`;
@@ -133,7 +136,7 @@ ${attribution.length ? `${sectionHeading("Campaign attribution")}${detailTable(a
     .map((entry) => (Array.isArray(entry) ? `${entry[0]}: ${entry[1]}` : entry))
     .join("\n");
   return {
-    subject: `New consultation inquiry: ${inquiry.topic}`,
+    subject: `🔔 NEW CONSULTATION INQUIRY: ${inquiry.name} | ${inquiry.topic}`,
     html: emailFrame({
       baseUrl,
       preheader: `New inquiry from ${inquiry.name} about ${inquiry.topic}.`,
@@ -164,7 +167,7 @@ ${sectionHeading("Your request at a glance")}${detailTable(summary)}
 ${notice("Your preferred time is a request, not a reserved appointment. No payment has been taken through this form.")}
 <p style="margin:23px 0 0;color:${colors.muted};font-size:13px;line-height:1.65;">If you did not submit this inquiry, please reply to this email so our team can check it.</p>`;
   return {
-    subject: "We received your consultation inquiry | Surabhi Astrology",
+    subject: "✨ We received your consultation inquiry | Surabhi Astrology",
     html: emailFrame({
       baseUrl,
       preheader: "Your inquiry has reached us. Our team will contact you to arrange the next step.",

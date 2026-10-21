@@ -44,11 +44,12 @@ export async function POST(request: Request) {
   const baseUrl = new URL(request.url).origin;
   const mail = inquiryEmail(parsed.data, baseUrl);
   const confirmation = confirmationEmail(parsed.data, baseUrl);
+  const senderAddress = sender.match(/<([^<>]+)>\s*$/)?.[1] ?? sender;
   const resend = new Resend(apiKey);
   const delivery = await deliverInquiryEmails(
     (message) => resend.emails.send(message),
     {
-      from: sender,
+      from: `Surabhi Astrology Consultations <${senderAddress}>`,
       to: recipients,
       replyTo: parsed.data.email,
       subject: mail.subject,
@@ -56,7 +57,7 @@ export async function POST(request: Request) {
       text: mail.text,
     },
     {
-      from: sender,
+      from: `Surabhi Astrology <${senderAddress}>`,
       to: [parsed.data.email],
       replyTo: process.env.CUSTOMER_REPLY_TO?.trim() || "surabhiastrology9@gmail.com",
       subject: confirmation.subject,

@@ -76,6 +76,9 @@ test("branded emails use public assets and keep private birth details out of the
   const team = inquiryEmail(inquiry, baseUrl);
   const visitor = confirmationEmail(inquiry, baseUrl);
 
+  assert.equal(team.subject, "🔔 NEW CONSULTATION INQUIRY: Asha <Visitor> | Career & direction");
+  assert.match(visitor.subject, /^✨ We received your consultation inquiry/);
+
   for (const email of [team, visitor]) {
     assert.match(
       email.html,
@@ -86,6 +89,8 @@ test("branded emails use public assets and keep private birth details out of the
       /https:\/\/consultation\.example\.com\/images\/surbhi-email-office\.jpg/,
     );
     assert.doesNotMatch(email.html, /Asha <Visitor>/);
+    assert.match(email.html, /https:\/\/wa\.me\/919251151330/);
+    assert.match(email.html, /https:\/\/www\.instagram\.com\/celebrity_astrologer_surbhi\//);
   }
   assert.match(team.html, /Private question/);
   assert.match(team.html, /Birth date/);
