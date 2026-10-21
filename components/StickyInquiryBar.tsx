@@ -43,12 +43,12 @@ export function StickyInquiryBar() {
           <div className={styles.copy}>
             <p className={styles.title}>Personal consultation with Surbhi Gupta</p>
             <p className={styles.detail}>
-              <CheckCircle2 aria-hidden="true" size={19} /> Free inquiry · personally arranged
+              <CheckCircle2 aria-hidden="true" size={19} /> Arranged personally with the team
             </p>
           </div>
           <div className={styles.status}>
-            <strong>Free inquiry</strong>
-            <span>No slot booked yet</span>
+            <strong>Personal guidance</strong>
+            <span>Arranged with you</span>
           </div>
           <InquiryTrigger className={styles.button}>
             <span>Ask Surbhi</span>

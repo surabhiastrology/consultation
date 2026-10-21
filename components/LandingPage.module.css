@@ -14,6 +14,9 @@
 .topbar span {
   color: var(--color-light-gold);
 }
+.topbar .topbarPrimary {
+  color: #fff5e7;
+}
 .header {
   position: relative;
   z-index: 20;
@@ -1748,6 +1751,12 @@
 @media (max-width: 680px) {
   .topbar {
     font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .topbarSecondary {
+    display: none;
   }
   .headerInner {
     min-height: 75px;

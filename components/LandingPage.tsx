@@ -87,9 +87,9 @@ const faqs = [
       "You can bring a question about relationships, marriage, career, business, family, finances, or another important decision. Share the context that matters to you.",
   },
   {
-    question: "Is the inquiry free?",
+    question: "How are consultation fees discussed?",
     answer:
-      "Yes. Sending this form is free. The team will share the consultation format, availability and any fee before you decide whether to proceed.",
+      "The team will share the consultation format, availability and any fee when they contact you. You can decide whether to proceed after discussing the details.",
   },
   {
     question: "Does my preferred date reserve a consultation?",
@@ -153,8 +153,10 @@ function Header() {
         Skip to content
       </a>
       <div className={styles.topbar}>
-        Personal guidance by Surbhi Gupta <span aria-hidden="true">✦</span> Send a free consultation
-        inquiry
+        <span className={styles.topbarPrimary}>Personal guidance by Surbhi Gupta</span>
+        <span className={styles.topbarSecondary}>
+          <span aria-hidden="true">✦</span> Share your question
+        </span>
       </div>
       <header className={styles.header}>
         <div className={`siteContainer ${styles.headerInner}`}>
@@ -631,9 +633,7 @@ function Inquiry() {
             </p>
           </div>
           <PillLink gold>Share Your Question</PillLink>
-          <p className={styles.inquiryAside}>
-            Free inquiry · No payment now · Appointment confirmed separately
-          </p>
+          <p className={styles.inquiryAside}>The team will discuss the consultation details with you.</p>
         </div>
       </div>
     </section>

@@ -118,7 +118,7 @@ export function inquiryEmail(inquiry: Inquiry, baseUrl: string): EmailContent {
     string,
   ][];
   const body = `<p style="margin:0;color:${colors.ink};font-size:15px;line-height:1.7;">A new visitor has requested a personal consultation. Please review the details and contact them directly to arrange the next step.</p>
-${notice("This is a free inquiry. The preferred time is not booked; confirm availability, format and any fee personally before arranging the consultation.")}
+${notice("The preferred time is not booked; confirm availability, format and any fee personally before arranging the consultation.")}
 ${sectionHeading("Contact & consultation")}${detailTable(contact)}
 ${sectionHeading("Birth details")}${detailTable(birth)}
 ${sectionHeading("Appointment preference")}${detailTable(appointment)}
@@ -156,7 +156,7 @@ export function confirmationEmail(inquiry: Inquiry, baseUrl: string): EmailConte
     ["Preferred time", inquiry.preferredWindow],
   ];
   const body = `<p style="margin:0 0 16px;color:${colors.ink};font-size:16px;line-height:1.65;">Dear ${escapeHtml(firstName)},</p>
-<p style="margin:0;color:${colors.ink};font-size:15px;line-height:1.75;">Thank you for sharing what is on your mind. We have received your free consultation inquiry, and the Surabhi Astrology team will review it with care.</p>
+<p style="margin:0;color:${colors.ink};font-size:15px;line-height:1.75;">Thank you for sharing what is on your mind. We have received your consultation inquiry, and the Surabhi Astrology team will review it with care.</p>
 ${sectionHeading("What happens next")}
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;border-collapse:collapse;">
 <tr><td style="width:35px;padding:10px 0;vertical-align:top;color:${colors.maroon};font-family:Georgia,serif;font-size:22px;">01</td><td style="padding:10px 0;color:${colors.ink};font-size:14px;line-height:1.6;">Our team reviews your question and preferred time.</td></tr>
@@ -164,7 +164,7 @@ ${sectionHeading("What happens next")}
 <tr><td style="padding:10px 0;vertical-align:top;color:${colors.maroon};font-family:Georgia,serif;font-size:22px;">03</td><td style="padding:10px 0;color:${colors.ink};font-size:14px;line-height:1.6;">Your consultation is arranged only after you confirm the details with the team.</td></tr>
 </table>
 ${sectionHeading("Your request at a glance")}${detailTable(summary)}
-${notice("Your preferred time is a request, not a reserved appointment. No payment has been taken through this form.")}
+${notice("Your preferred time is a request, not a reserved appointment. The team will discuss consultation details with you.")}
 <p style="margin:23px 0 0;color:${colors.muted};font-size:13px;line-height:1.65;">If you did not submit this inquiry, please reply to this email so our team can check it.</p>`;
   return {
     subject: "✨ We received your consultation inquiry | Surabhi Astrology",
@@ -175,6 +175,6 @@ ${notice("Your preferred time is a request, not a reserved appointment. No payme
       title: "Your question has reached us.",
       body,
     }),
-    text: `Dear ${firstName},\n\nThank you for sharing what is on your mind. We have received your free consultation inquiry. Our team will review it and contact you by WhatsApp, phone or email to discuss availability, format and any fee.\n\nTopic: ${inquiry.topic}\nPreferred date: ${readableDate(inquiry.preferredDate)}\nPreferred time: ${inquiry.preferredWindow}\n\nYour preferred time is a request, not a reserved appointment. No payment has been taken through this form.\n\nIf you did not submit this inquiry, please reply to this email.\n\nSurabhi Astrology`,
+    text: `Dear ${firstName},\n\nThank you for sharing what is on your mind. We have received your consultation inquiry. Our team will review it and contact you by WhatsApp, phone or email to discuss availability, format and any fee.\n\nTopic: ${inquiry.topic}\nPreferred date: ${readableDate(inquiry.preferredDate)}\nPreferred time: ${inquiry.preferredWindow}\n\nYour preferred time is a request, not a reserved appointment. The team will discuss consultation details with you.\n\nIf you did not submit this inquiry, please reply to this email.\n\nSurabhi Astrology`,
   };
 }

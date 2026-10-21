@@ -14,10 +14,9 @@ export default function Terms() {
       </p>
       <h2>Inquiry and booking</h2>
       <p>
-        Submitting the form is a free inquiry. It does not reserve a consultation slot, form a paid
-        booking or require payment. A member of the team will contact you separately to discuss
-        availability, format, duration and any fee. A consultation is confirmed only when the terms
-        are agreed directly with you.
+        Submitting the form does not reserve a consultation slot. A member of the team will contact
+        you to discuss availability, format, duration and any fee. A consultation is confirmed only
+        when the terms are agreed directly with you.
       </p>
       <h2>Information you submit</h2>
       <p>

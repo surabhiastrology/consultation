@@ -631,7 +631,7 @@ export function InquiryForm({ onBusyChange }: { onBusyChange: (busy: boolean) =>
               {state === "sending"
                 ? "Sending your inquiry…"
                 : step === 2
-                  ? "Send my free inquiry"
+                  ? "Send my inquiry"
                   : "Continue"}
             </span>
             <span className={styles.submitIcon}>

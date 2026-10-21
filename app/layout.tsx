@@ -21,11 +21,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://consultation.surabhiastrology.com"),
   title: "Personal Astrology Consultation | Surabhi Astrology",
   description:
-    "Explore a personal astrology consultation with Surbhi Gupta. Share your questions and preferred time through a free inquiry; the team will follow up to confirm next steps.",
+    "Explore a personal astrology consultation with Surbhi Gupta. Share your question and preferred time; the team will contact you to discuss the next steps.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "A conversation for the questions that matter | Surabhi Astrology",
-    description: "Personal astrology guidance with Surbhi Gupta. Begin with a free inquiry.",
+    description: "Personal astrology guidance with Surbhi Gupta. Share your question and begin the conversation.",
     url: "/",
     siteName: "Surabhi Astrology",
     type: "website",
