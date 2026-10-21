@@ -101,6 +101,7 @@ const stepLabels = ["Contact", "Birth details", "Your request"] as const;
 export function InquiryForm({ onBusyChange }: { onBusyChange: (busy: boolean) => void }) {
   const [step, setStep] = useState(0);
   const [state, setState] = useState<"idle" | "sending" | "success">("idle");
+  const [confirmationSent, setConfirmationSent] = useState(false);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const sending = useRef(false);
@@ -218,6 +219,7 @@ export function InquiryForm({ onBusyChange }: { onBusyChange: (busy: boolean) =>
         setState("idle");
         return;
       }
+      setConfirmationSent(result.confirmationSent === true);
       setState("success");
       window.dispatchEvent(new CustomEvent("surabhi:lead-success"));
     } catch {
@@ -237,6 +239,11 @@ export function InquiryForm({ onBusyChange }: { onBusyChange: (busy: boolean) =>
         <p>
           Your inquiry has been sent to the Surabhi Astrology team. They will review it and contact
           you to discuss the consultation and a suitable time.
+        </p>
+        <p className={styles.successFine}>
+          {confirmationSent
+            ? "A confirmation email has been sent to the address you provided."
+            : "We could not send a confirmation email. Please do not submit again; the team has your inquiry and will contact you directly."}
         </p>
         <p className={styles.successFine}>
           Your preferred time is not a confirmed booking. Please wait for personal confirmation from
@@ -633,8 +640,8 @@ export function InquiryForm({ onBusyChange }: { onBusyChange: (busy: boolean) =>
           </button>
         </div>
         <p>
-          <LockKeyhole size={15} aria-hidden="true" />{" "}
-          Your details are sent only when you finish all three steps.
+          <LockKeyhole size={15} aria-hidden="true" /> Your details are sent only when you finish
+          all three steps.
         </p>
       </div>
     </form>

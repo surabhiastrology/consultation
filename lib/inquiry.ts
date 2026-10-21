@@ -81,36 +81,3 @@ export const inquirySchema = z
   });
 
 export type Inquiry = z.infer<typeof inquirySchema>;
-
-export function escapeHtml(value: string): string {
-  return value.replace(
-    /[&<>"']/g,
-    (character) =>
-      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character] ??
-      character,
-  );
-}
-
-export function inquiryEmail(inquiry: Inquiry): { subject: string; html: string; text: string } {
-  const fields: [string, string][] = [
-    ["Name", inquiry.name],
-    ["Email", inquiry.email],
-    ["WhatsApp", inquiry.whatsapp],
-    ["Consultation topic", inquiry.topic],
-    ["Birth date", inquiry.birthDate],
-    ["Birth time", `${inquiry.birthTime}${inquiry.birthTimeApproximate ? " (approximate)" : ""}`],
-    ["Birth place", inquiry.birthPlace],
-    ["Preferred appointment date", inquiry.preferredDate],
-    ["Preferred time window", inquiry.preferredWindow],
-    ["Question", inquiry.question || "Not provided"],
-  ];
-  const attribution = Object.entries(inquiry.campaign).filter(([, value]) => value);
-  const subject = `New consultation inquiry: ${inquiry.topic}`;
-  const text = [...fields, ...attribution.map(([key, value]) => [key, value] as [string, string])]
-    .map(([label, value]) => `${label}: ${value}`)
-    .join("\n");
-  const row = ([label, value]: [string, string]) =>
-    `<tr><th style="padding:9px 12px;text-align:left;vertical-align:top;background:#fcf7ee">${escapeHtml(label)}</th><td style="padding:9px 12px;white-space:pre-wrap">${escapeHtml(value)}</td></tr>`;
-  const html = `<div style="font-family:Arial,sans-serif;color:#2a1400"><h1 style="color:#800000">New consultation inquiry</h1><p>The preferred date is a request, not a confirmed booking. Follow up manually before confirming a time or fee.</p><table style="border-collapse:collapse;width:100%;max-width:720px">${fields.map(row).join("")}</table>${attribution.length ? `<h2 style="color:#800000">Campaign attribution</h2><table style="border-collapse:collapse;width:100%;max-width:720px">${attribution.map(row).join("")}</table>` : ""}</div>`;
-  return { subject, html, text };
-}

@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { inquiryEmail, inquirySchema } from "@/lib/inquiry";
-import { emailAccepted } from "@/lib/email-delivery";
+import { inquirySchema } from "@/lib/inquiry";
+import { confirmationEmail, inquiryEmail } from "@/lib/inquiry-email";
+import { deliverInquiryEmails } from "@/lib/email-delivery";
 
 export const runtime = "nodejs";
 
@@ -40,17 +41,30 @@ export async function POST(request: Request) {
     );
   }
 
-  const mail = inquiryEmail(parsed.data);
+  const baseUrl = new URL(request.url).origin;
+  const mail = inquiryEmail(parsed.data, baseUrl);
+  const confirmation = confirmationEmail(parsed.data, baseUrl);
   const resend = new Resend(apiKey);
-  const accepted = await emailAccepted((message) => resend.emails.send(message), {
-    from: sender,
-    to: recipients,
-    replyTo: parsed.data.email,
-    subject: mail.subject,
-    html: mail.html,
-    text: mail.text,
-  });
-  if (!accepted)
+  const delivery = await deliverInquiryEmails(
+    (message) => resend.emails.send(message),
+    {
+      from: sender,
+      to: recipients,
+      replyTo: parsed.data.email,
+      subject: mail.subject,
+      html: mail.html,
+      text: mail.text,
+    },
+    {
+      from: sender,
+      to: [parsed.data.email],
+      replyTo: process.env.CUSTOMER_REPLY_TO?.trim() || "surabhiastrology9@gmail.com",
+      subject: confirmation.subject,
+      html: confirmation.html,
+      text: confirmation.text,
+    },
+  );
+  if (!delivery.leadAccepted)
     return NextResponse.json(
       {
         error:
@@ -58,5 +72,8 @@ export async function POST(request: Request) {
       },
       { status: 502 },
     );
-  return NextResponse.json({ success: true });
+  if (!delivery.confirmationAccepted) {
+    console.warn("Inquiry was accepted, but the confirmation email was not accepted by Resend.");
+  }
+  return NextResponse.json({ success: true, confirmationSent: delivery.confirmationAccepted });
 }

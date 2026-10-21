@@ -1,7 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { inquiryEmail, inquirySchema } from "../lib/inquiry.ts";
-import { emailAccepted } from "../lib/email-delivery.ts";
+import { inquirySchema } from "../lib/inquiry.ts";
+import { confirmationEmail, inquiryEmail } from "../lib/inquiry-email.ts";
+import { deliverInquiryEmails, emailAccepted } from "../lib/email-delivery.ts";
 
 const today = new Intl.DateTimeFormat("en-CA", {
   timeZone: "Asia/Kolkata",
@@ -41,7 +42,7 @@ function sample(overrides = {}) {
 test("accepts a complete inquiry and marks an approximate birth time", () => {
   const result = inquirySchema.safeParse(sample());
   assert.equal(result.success, true);
-  const email = inquiryEmail(result.data);
+  const email = inquiryEmail(result.data, "https://consultation.example.com");
   assert.match(email.text, /Birth time: 09:30 \(approximate\)/);
   assert.match(email.text, /utm_source: meta/);
 });
@@ -62,9 +63,34 @@ test("rejects a past preferred date and a future birth date", () => {
 test("limits open text and escapes HTML in the notification", () => {
   assert.equal(inquirySchema.safeParse(sample({ question: "a".repeat(1001) })).success, false);
   const parsed = inquirySchema.parse(sample({ question: "<script>alert('x')</script>" }));
-  const email = inquiryEmail(parsed);
+  const email = inquiryEmail(parsed, "https://consultation.example.com");
   assert.doesNotMatch(email.html, /<script>/);
   assert.match(email.html, /&lt;script&gt;/);
+});
+
+test("branded emails use public assets and keep private birth details out of the visitor copy", () => {
+  const inquiry = inquirySchema.parse(
+    sample({ name: "Asha <Visitor>", question: "Private question" }),
+  );
+  const baseUrl = "https://consultation.example.com";
+  const team = inquiryEmail(inquiry, baseUrl);
+  const visitor = confirmationEmail(inquiry, baseUrl);
+
+  for (const email of [team, visitor]) {
+    assert.match(
+      email.html,
+      /https:\/\/consultation\.example\.com\/images\/surbhi-email-logo\.png/,
+    );
+    assert.match(
+      email.html,
+      /https:\/\/consultation\.example\.com\/images\/surbhi-email-office\.jpg/,
+    );
+    assert.doesNotMatch(email.html, /Asha <Visitor>/);
+  }
+  assert.match(team.html, /Private question/);
+  assert.match(team.html, /Birth date/);
+  assert.match(visitor.text, /not a reserved appointment/);
+  assert.doesNotMatch(visitor.html, /Private question|Birth date|Birth time|Jaipur, India/);
 });
 
 test("reports success only when the email provider accepts the notification", async () => {
@@ -90,4 +116,35 @@ test("reports success only when the email provider accepts the notification", as
     }, message),
     false,
   );
+});
+
+test("sends the visitor confirmation only after the team email is accepted", async () => {
+  const teamMessage = { to: ["team@example.com"] };
+  const customerMessage = { to: ["visitor@example.com"] };
+  const sent = [];
+
+  const rejectedTeam = await deliverInquiryEmails(
+    async (message) => {
+      sent.push(message.to[0]);
+      return { data: null, error: new Error("rejected") };
+    },
+    teamMessage,
+    customerMessage,
+  );
+  assert.deepEqual(rejectedTeam, { leadAccepted: false, confirmationAccepted: false });
+  assert.deepEqual(sent, ["team@example.com"]);
+
+  sent.length = 0;
+  const rejectedConfirmation = await deliverInquiryEmails(
+    async (message) => {
+      sent.push(message.to[0]);
+      return message === teamMessage
+        ? { data: { id: "team-id" }, error: null }
+        : { data: null, error: new Error("rejected") };
+    },
+    teamMessage,
+    customerMessage,
+  );
+  assert.deepEqual(rejectedConfirmation, { leadAccepted: true, confirmationAccepted: false });
+  assert.deepEqual(sent, ["team@example.com", "visitor@example.com"]);
 });

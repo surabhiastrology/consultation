@@ -18,9 +18,9 @@ A desktop preview of the implemented hero is saved at `previews/desktop.png`.
 
 ## Email configuration
 
-Set `RESEND_API_KEY`, `EMAIL_FROM` and `LEAD_NOTIFICATION_TO` in `.env.local`. `EMAIL_FROM` must use a domain verified in the owner’s Resend account. The example recipient list contains the two requested test inboxes. The endpoint returns an error and preserves the form when these settings are missing or the provider does not accept the email.
+Set `RESEND_API_KEY`, `EMAIL_FROM` and `LEAD_NOTIFICATION_TO` in `.env.local` or the Vercel project environment. `EMAIL_FROM` must use a domain verified in the owner’s Resend account. The example recipient list contains the two requested team inboxes. `CUSTOMER_REPLY_TO` is optional and defaults to the client inbox. The endpoint sends a branded team notification first, then a branded confirmation to the visitor. It returns an error and preserves the form if the team notification is not accepted. If only the visitor confirmation fails, the inquiry still succeeds so the visitor does not create a duplicate lead by retrying.
 
-Before running ads, send a real test inquiry and check arrival in **both** inboxes, including spam folders. An accepted Resend API request is not proof of final inbox delivery. No lead is stored elsewhere in this version.
+Before running ads, send a real test inquiry and check arrival in **both team inboxes and the visitor inbox**, including spam folders. Check that the logo and photo load from the public site URL. An accepted Resend API request is not proof of final inbox delivery. No lead is stored elsewhere in this version.
 
 ## Ad measurement
 

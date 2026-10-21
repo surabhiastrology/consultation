@@ -18,3 +18,15 @@ export async function emailAccepted(
     return false;
   }
 }
+
+export async function deliverInquiryEmails(
+  send: (message: NotificationEmail) => Promise<{ data: { id: string } | null; error: unknown }>,
+  teamMessage: NotificationEmail,
+  customerMessage: NotificationEmail,
+): Promise<{ leadAccepted: boolean; confirmationAccepted: boolean }> {
+  const leadAccepted = await emailAccepted(send, teamMessage);
+  if (!leadAccepted) return { leadAccepted: false, confirmationAccepted: false };
+
+  const confirmationAccepted = await emailAccepted(send, customerMessage);
+  return { leadAccepted: true, confirmationAccepted };
+}

@@ -43,9 +43,11 @@ export default function PrivacyPolicy() {
       </p>
       <h2>Sharing and contact</h2>
       <p>
-        The inquiry goes to Surabhi Astrology’s team and its email delivery provider. The team may
-        contact you by email, WhatsApp or phone about your inquiry. This form does not sign you up
-        for general marketing messages.
+        The inquiry goes to Surabhi Astrology’s team and its email delivery provider. We send a
+        confirmation to the email address you provide, summarising your topic and preferred time
+        without repeating your birth details or question. The team may contact you by email,
+        WhatsApp or phone about your inquiry. This form does not sign you up for general marketing
+        messages.
       </p>
       <h2>Your choices</h2>
       <p>
