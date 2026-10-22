@@ -414,6 +414,305 @@
   color: #8a7b69;
   font-size: 10px;
 }
+.pricingSection {
+  background: #fbf6ed;
+}
+.pricingGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.07fr);
+  grid-template-rows: repeat(2, minmax(300px, auto));
+  gap: 20px;
+  margin-top: 44px;
+}
+.pricingCard {
+  display: grid;
+  min-width: 0;
+  grid-template-columns: 37% minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid #ddc190;
+  border-radius: 16px;
+  background: #fff9ed;
+  box-shadow: 0 13px 28px #4a240c11;
+}
+.pricingFeatured {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  grid-template-columns: 1fr;
+  grid-template-rows: minmax(270px, 45%) 1fr;
+}
+.pricingImage {
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+  background: #e8d1a9;
+}
+.pricingImage img {
+  object-fit: cover;
+}
+.pricingCard:not(.pricingFeatured) .pricingImage img {
+  object-position: 50% 28%;
+}
+.pricingCard.pricingVideo .pricingImage img {
+  object-position: 50% 23%;
+}
+.pricingFeatured .pricingImage img {
+  object-position: 50% 37%;
+}
+.pricingContent {
+  display: flex;
+  position: relative;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px 27px 24px;
+}
+.pricingFeatured .pricingContent {
+  padding: 25px 34px 32px;
+}
+.pricingCardTop {
+  position: absolute;
+  top: 19px;
+  right: 27px;
+  display: flex;
+}
+.pricingFeatured .pricingCardTop {
+  top: 24px;
+  right: 34px;
+}
+.pricingIcon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #e7cfa4;
+  border-radius: 50%;
+  background: #f7ebd5;
+  color: #8b1e1e;
+}
+.pricingCard h3 {
+  margin: 0 48px 9px 0;
+  color: #58131a;
+  font-family: var(--font-heading);
+  font-size: clamp(29px, 2.5vw, 38px);
+  font-weight: 600;
+  line-height: 1;
+}
+.pricingFeatured h3 {
+  font-size: clamp(35px, 3.2vw, 48px);
+}
+.pricingContent > p {
+  max-width: 390px;
+  margin: 0 0 17px;
+  color: #705f50;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.pricingIncludes {
+  width: 100%;
+  margin: 0 0 18px;
+}
+.pricingIncludes h4 {
+  margin: 0 0 9px;
+  color: #762c20;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.pricingIncludes ul {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pricingIncludes li {
+  position: relative;
+  padding-left: 17px;
+  color: #594536;
+  font-size: 12px;
+  line-height: 1.45;
+}
+.pricingIncludes li::before {
+  position: absolute;
+  top: 0.51em;
+  left: 1px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c59242;
+  content: "";
+}
+.pricingFacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 18px;
+}
+.pricingFacts span {
+  padding: 5px 9px;
+  border: 1px solid #e7d3af;
+  border-radius: 50px;
+  color: #70523b;
+  font-size: 11px;
+}
+.pricingCardBottom {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid #eadbc2;
+}
+.pricingCardBottom strong {
+  color: #68131a;
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+}
+.pricingButton {
+  display: inline-flex;
+  min-height: 39px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border: 1px solid #79131e;
+  border-radius: 50px;
+  background: #79131e;
+  color: #fff8ed;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.pricingButton:hover {
+  background: #4a0404;
+}
+.pricingButton:focus-visible {
+  outline: 3px solid #c8a84b;
+  outline-offset: 3px;
+}
+.urgentBand {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+  margin-top: 20px;
+  padding: 27px 34px;
+  border: 1px solid #c8a84b;
+  border-radius: 17px;
+  background: linear-gradient(105deg, #4a0404, #801b24);
+  color: #fff9ef;
+}
+.urgentBand > div {
+  flex: 1;
+  text-align: left;
+}
+.urgentIcon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #e2c06a80;
+  border-radius: 50%;
+  color: #f2d27c;
+}
+.urgentBand span {
+  color: #e2c06a;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+.urgentBand h3 {
+  margin: 5px 0 4px;
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 600;
+}
+.urgentBand p {
+  margin: 0;
+  color: #f2ddd0;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.urgentBand > strong {
+  margin-left: auto;
+  color: #f2d27c;
+  font-family: var(--font-body);
+  font-size: 30px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.pricingNote {
+  max-width: 780px;
+  margin: 21px auto 0;
+  color: #6e5a48;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+}
+@media (max-width: 900px) {
+  .pricingGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+  }
+  .pricingCard {
+    min-height: 275px;
+  }
+  .pricingFeatured {
+    grid-column: auto;
+    grid-row: auto;
+    grid-template-rows: 320px auto;
+  }
+}
+@media (max-width: 600px) {
+  .pricingGrid {
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .pricingCard {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    grid-template-rows: 178px auto;
+  }
+  .pricingFeatured {
+    grid-template-rows: 250px auto;
+  }
+  .pricingContent,
+  .pricingFeatured .pricingContent {
+    padding: 20px 22px 22px;
+  }
+  .pricingCardTop,
+  .pricingFeatured .pricingCardTop {
+    top: 18px;
+    right: 22px;
+  }
+  .pricingCard h3 {
+    margin-top: 0;
+  }
+  .pricingCardBottom strong {
+    font-size: 21px;
+  }
+  .pricingCardBottom {
+    flex-wrap: wrap;
+  }
+  .urgentBand {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+    padding: 23px;
+  }
+  .urgentBand > strong {
+    margin-left: 0;
+    font-size: 28px;
+  }
+}
 .exploreSection {
   background: #f7eddd;
 }
@@ -893,6 +1192,28 @@
   font-family: var(--font-heading);
   font-size: 23px;
   line-height: 1.15;
+}
+.footerInstagram {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  border: 1px solid #c8a84b;
+  border-radius: 50%;
+  color: var(--color-maroon);
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+.footerInstagram:hover {
+  background: var(--color-maroon);
+  color: #fff8ed;
+}
+.footerInstagram:focus-visible {
+  outline: 3px solid var(--color-maroon);
+  outline-offset: 3px;
 }
 .footerColumn h3 {
   margin: 3px 0 20px;

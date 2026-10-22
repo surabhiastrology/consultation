@@ -136,6 +136,98 @@
   font-size: 14px;
   line-height: 1.5;
 }
+.serviceChoices {
+  display: grid;
+  gap: 9px;
+  margin: 0 0 15px;
+}
+.serviceChoice {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-height: 65px;
+  padding: 12px 16px;
+  border: 1px solid #e1cfaf;
+  border-radius: 11px;
+  background: #fcf7ee;
+  cursor: pointer;
+}
+.serviceChoice:hover,
+.serviceSelected {
+  border-color: #a76b2b;
+  background: #f8ecda;
+}
+.serviceChoice:focus-within {
+  outline: 3px solid #c8a84b;
+  outline-offset: 2px;
+}
+.serviceChoice input {
+  width: 18px;
+  height: 18px;
+  accent-color: #800000;
+}
+.serviceChoice span {
+  flex: 1;
+  color: #4a140c;
+  font-size: 15px;
+  font-weight: 700;
+}
+.serviceChoice small,
+.urgentChoice small {
+  display: block;
+  margin-top: 3px;
+  color: #766757;
+  font-size: 12px;
+  font-weight: 400;
+}
+.serviceChoice > strong {
+  color: #68131a;
+  font-family: var(--font-body);
+  font-size: 19px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.serviceExtras {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+  margin: 19px 0;
+}
+.urgentChoice {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  margin: 20px 0 0;
+  padding: 15px;
+  border: 1px solid #e8d8b8;
+  border-radius: 11px;
+  background: #fffaf1;
+  cursor: pointer;
+}
+.urgentChoice > span {
+  color: #4a140c;
+  font-size: 14px;
+}
+.selectedPrice {
+  margin: 16px 0 23px;
+  color: #6f5b4c;
+  font-size: 14px;
+}
+.selectedPrice strong {
+  color: #68131a;
+  font-size: 18px;
+}
+@media (max-width: 520px) {
+  .serviceExtras {
+    grid-template-columns: 1fr;
+  }
+  .serviceChoice {
+    padding: 10px 12px;
+  }
+  .serviceChoice > strong {
+    font-size: 18px;
+  }
+}
 .grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

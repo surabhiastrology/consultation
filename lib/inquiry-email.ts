@@ -1,4 +1,4 @@
-import type { Inquiry } from "./inquiry";
+import { consultationPrice, consultationServices, formatRupees, type Inquiry } from "./inquiry.ts";
 
 type EmailContent = { subject: string; html: string; text: string };
 
@@ -98,6 +98,23 @@ function readableDate(value: string): string {
 }
 
 export function inquiryEmail(inquiry: Inquiry, baseUrl: string): EmailContent {
+  const format: [string, string][] = [
+    ["Selected service", consultationServices[inquiry.service].label],
+    ["Duration", "30 minutes"],
+    ...(inquiry.service === "oneToOne"
+      ? [
+          ["Meeting mode", inquiry.meetingMode === "inPerson" ? "In person" : "Online"] as [
+            string,
+            string,
+          ],
+        ]
+      : []),
+    ...(inquiry.service === "oneToOne" && inquiry.meetingMode === "inPerson"
+      ? [["Preferred city", inquiry.consultationLocation ?? "Not provided"] as [string, string]]
+      : []),
+    ["Urgent request", inquiry.urgent ? "Yes — subject to availability" : "No"],
+    ["Listed price", formatRupees(consultationPrice(inquiry.service, inquiry.urgent))],
+  ];
   const contact: [string, string][] = [
     ["Name", inquiry.name],
     ["Email", inquiry.email],
@@ -118,15 +135,17 @@ export function inquiryEmail(inquiry: Inquiry, baseUrl: string): EmailContent {
     string,
   ][];
   const body = `<p style="margin:0;color:${colors.ink};font-size:15px;line-height:1.7;">A new visitor has requested a personal consultation. Please review the details and contact them directly to arrange the next step.</p>
-${notice("The preferred time is not booked; confirm availability, format and any fee personally before arranging the consultation.")}
-${sectionHeading("Contact & consultation")}${detailTable(contact)}
+${notice("The preferred time is not booked; confirm availability, format and the listed price personally before arranging the consultation.")}
+${sectionHeading("Selected consultation")}${detailTable(format)}
+${sectionHeading("Contact & question")}${detailTable(contact)}
 ${sectionHeading("Birth details")}${detailTable(birth)}
 ${sectionHeading("Appointment preference")}${detailTable(appointment)}
 ${sectionHeading("Their question")}<p style="margin:0;padding:17px 18px;border:1px solid ${colors.border};background:#fffaf3;color:${colors.ink};font-size:14px;line-height:1.65;overflow-wrap:break-word;">${withLineBreaks(inquiry.question || "Not provided")}</p>
 ${attribution.length ? `${sectionHeading("Campaign attribution")}${detailTable(attribution)}` : ""}`;
   const text = [
     "New consultation inquiry",
-    "Follow up personally to confirm availability, format and any fee. No slot has been booked.",
+    "Follow up personally to confirm availability, format and the listed price. No slot has been booked.",
+    ...format,
     ...contact,
     ...birth,
     ...appointment,
@@ -152,6 +171,23 @@ export function confirmationEmail(inquiry: Inquiry, baseUrl: string): EmailConte
   const firstName = inquiry.name.trim().split(/\s+/)[0] || inquiry.name;
   const summary: [string, string][] = [
     ["Your topic", inquiry.topic],
+    ["Consultation", consultationServices[inquiry.service].label],
+    ...(inquiry.service === "oneToOne"
+      ? [
+          ["Meeting mode", inquiry.meetingMode === "inPerson" ? "In person" : "Online"] as [
+            string,
+            string,
+          ],
+        ]
+      : []),
+    ...(inquiry.service === "oneToOne" && inquiry.meetingMode === "inPerson"
+      ? [["Preferred city", inquiry.consultationLocation ?? "Not provided"] as [string, string]]
+      : []),
+    ["Duration", "30 minutes"],
+    ["Your selected price", formatRupees(consultationPrice(inquiry.service, inquiry.urgent))],
+    ...(inquiry.urgent
+      ? [["Urgent request", "Yes — subject to availability"] as [string, string]]
+      : []),
     ["Preferred date", readableDate(inquiry.preferredDate)],
     ["Preferred time", inquiry.preferredWindow],
   ];
@@ -160,7 +196,7 @@ export function confirmationEmail(inquiry: Inquiry, baseUrl: string): EmailConte
 ${sectionHeading("What happens next")}
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;border-collapse:collapse;">
 <tr><td style="width:35px;padding:10px 0;vertical-align:top;color:${colors.maroon};font-family:Georgia,serif;font-size:22px;">01</td><td style="padding:10px 0;color:${colors.ink};font-size:14px;line-height:1.6;">Our team reviews your question and preferred time.</td></tr>
-<tr><td style="padding:10px 0;vertical-align:top;color:${colors.maroon};font-family:Georgia,serif;font-size:22px;">02</td><td style="padding:10px 0;color:${colors.ink};font-size:14px;line-height:1.6;">We contact you by WhatsApp, phone or email to discuss availability, format and any fee.</td></tr>
+<tr><td style="padding:10px 0;vertical-align:top;color:${colors.maroon};font-family:Georgia,serif;font-size:22px;">02</td><td style="padding:10px 0;color:${colors.ink};font-size:14px;line-height:1.6;">We contact you by WhatsApp, phone or email to confirm availability, format and the listed price.</td></tr>
 <tr><td style="padding:10px 0;vertical-align:top;color:${colors.maroon};font-family:Georgia,serif;font-size:22px;">03</td><td style="padding:10px 0;color:${colors.ink};font-size:14px;line-height:1.6;">Your consultation is arranged only after you confirm the details with the team.</td></tr>
 </table>
 ${sectionHeading("Your request at a glance")}${detailTable(summary)}
@@ -175,6 +211,6 @@ ${notice("Your preferred time is a request, not a reserved appointment. The team
       title: "Your question has reached us.",
       body,
     }),
-    text: `Dear ${firstName},\n\nThank you for sharing what is on your mind. We have received your consultation inquiry. Our team will review it and contact you by WhatsApp, phone or email to discuss availability, format and any fee.\n\nTopic: ${inquiry.topic}\nPreferred date: ${readableDate(inquiry.preferredDate)}\nPreferred time: ${inquiry.preferredWindow}\n\nYour preferred time is a request, not a reserved appointment. The team will discuss consultation details with you.\n\nIf you did not submit this inquiry, please reply to this email.\n\nSurabhi Astrology`,
+    text: `Dear ${firstName},\n\nThank you for sharing what is on your mind. We have received your consultation inquiry. Our team will review it and contact you by WhatsApp, phone or email to confirm availability, format and the listed price.\n\n${summary.map(([label, value]) => `${label}: ${value}`).join("\n")}\n\nYour preferred time is a request, not a reserved appointment. The team will discuss consultation details with you.\n\nIf you did not submit this inquiry, please reply to this email.\n\nSurabhi Astrology`,
   };
 }

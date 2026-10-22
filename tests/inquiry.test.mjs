@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { inquirySchema } from "../lib/inquiry.ts";
+import { consultationPrice, inquirySchema } from "../lib/inquiry.ts";
 import { confirmationEmail, inquiryEmail } from "../lib/inquiry-email.ts";
 import { deliverInquiryEmails, emailAccepted } from "../lib/email-delivery.ts";
 
@@ -17,6 +17,8 @@ function sample(overrides = {}) {
     email: "test@example.com",
     whatsapp: "+919876543210",
     topic: "Career & direction",
+    service: "audio",
+    urgent: false,
     birthDate: "1990-05-20",
     birthTime: "09:30",
     birthTimeApproximate: true,
@@ -58,6 +60,38 @@ test("rejects missing required fields and invalid contact values", () => {
 test("rejects a past preferred date and a future birth date", () => {
   assert.equal(inquirySchema.safeParse(sample({ preferredDate: "2020-01-01" })).success, false);
   assert.equal(inquirySchema.safeParse(sample({ birthDate: "2099-01-01" })).success, false);
+});
+
+test("requires a format and an in-person city, and applies the urgent price", () => {
+  assert.equal(inquirySchema.safeParse(sample({ service: "" })).success, false);
+  assert.equal(inquirySchema.safeParse(sample({ service: "oneToOne" })).success, false);
+  assert.equal(
+    inquirySchema.safeParse(sample({ service: "oneToOne", meetingMode: "inPerson" })).success,
+    false,
+  );
+  assert.equal(
+    inquirySchema.safeParse(
+      sample({ service: "audio", meetingMode: "inPerson", consultationLocation: "Dubai" }),
+    ).success,
+    false,
+  );
+  const inPerson = inquirySchema.parse(
+    sample({
+      service: "oneToOne",
+      meetingMode: "inPerson",
+      consultationLocation: "Dubai",
+      urgent: true,
+    }),
+  );
+  assert.equal(consultationPrice(inPerson.service, inPerson.urgent), 51_000);
+  assert.equal(consultationPrice("audio", false), 11_000);
+  assert.equal(consultationPrice("video", false), 15_000);
+  assert.equal(consultationPrice("oneToOne", false), 24_000);
+  const email = inquiryEmail(inPerson, "https://consultation.example.com");
+  assert.match(email.text, /Preferred city: Dubai/);
+  assert.match(email.text, /Listed price: ₹51,000/);
+  const confirmation = confirmationEmail(inPerson, "https://consultation.example.com");
+  assert.match(confirmation.text, /Your selected price: ₹51,000/);
 });
 
 test("limits open text and escapes HTML in the notification", () => {

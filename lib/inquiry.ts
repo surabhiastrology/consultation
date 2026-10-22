@@ -17,6 +17,22 @@ export const timeWindows = [
   "Afternoon (12pm–4pm)",
   "Evening (4pm–8pm)",
 ] as const;
+export const consultationServices = {
+  audio: { label: "Audio call", price: 11_000 },
+  video: { label: "Video call", price: 15_000 },
+  oneToOne: { label: "One-to-one consultation", price: 24_000 },
+} as const;
+export const consultationLocations = ["Jaipur", "Mumbai", "Dubai"] as const;
+export const urgentConsultationPrice = 51_000;
+export type ConsultationService = keyof typeof consultationServices;
+
+export function consultationPrice(service: ConsultationService, urgent: boolean): number {
+  return urgent ? urgentConsultationPrice : consultationServices[service].price;
+}
+
+export function formatRupees(amount: number): string {
+  return `₹${amount.toLocaleString("en-IN")}`;
+}
 
 export const inquirySchema = z
   .object({
@@ -29,6 +45,12 @@ export const inquirySchema = z
       .max(20)
       .regex(/^\+?[0-9][0-9\s().-]{7,19}$/, "Enter a valid WhatsApp number."),
     topic: z.enum(topics, { error: "Choose a consultation topic." }),
+    service: z.enum(["audio", "video", "oneToOne"], {
+      error: "Choose a consultation format.",
+    }),
+    meetingMode: z.enum(["online", "inPerson"]).optional(),
+    consultationLocation: z.enum(consultationLocations).optional(),
+    urgent: z.boolean(),
     birthDate: z.iso.date("Enter a valid birth date."),
     birthTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Enter a valid birth time."),
     birthTimeApproximate: z.boolean(),
@@ -60,6 +82,38 @@ export const inquirySchema = z
       }),
   })
   .superRefine((value, context) => {
+    if (value.service !== "oneToOne" && (value.meetingMode || value.consultationLocation))
+      context.addIssue({
+        code: "custom",
+        path: ["meetingMode"],
+        message: "Meeting preferences apply only to one-to-one consultations.",
+      });
+    if (
+      value.service === "oneToOne" &&
+      value.meetingMode !== "inPerson" &&
+      value.consultationLocation
+    )
+      context.addIssue({
+        code: "custom",
+        path: ["consultationLocation"],
+        message: "Choose a city only for an in-person consultation.",
+      });
+    if (value.service === "oneToOne" && !value.meetingMode)
+      context.addIssue({
+        code: "custom",
+        path: ["meetingMode"],
+        message: "Choose online or in person.",
+      });
+    if (
+      value.service === "oneToOne" &&
+      value.meetingMode === "inPerson" &&
+      !value.consultationLocation
+    )
+      context.addIssue({
+        code: "custom",
+        path: ["consultationLocation"],
+        message: "Choose a preferred city.",
+      });
     const today = new Intl.DateTimeFormat("en-CA", {
       timeZone: "Asia/Kolkata",
       year: "numeric",

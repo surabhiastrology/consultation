@@ -7,7 +7,16 @@ import { Checkbox, MenuItem, Select, TextField } from "@mui/material";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 import dayjs, { type Dayjs } from "dayjs";
-import { inquirySchema, timeWindows, topics } from "@/lib/inquiry";
+import {
+  consultationLocations,
+  consultationPrice,
+  consultationServices,
+  formatRupees,
+  inquirySchema,
+  timeWindows,
+  topics,
+  type ConsultationService,
+} from "@/lib/inquiry";
 import styles from "./InquiryForm.module.css";
 
 type FieldErrors = Record<string, string[] | undefined>;
@@ -93,12 +102,26 @@ function FieldError({ name, errors }: { name: string; errors: FieldErrors }) {
 const stepFields = [
   ["name", "email", "whatsapp", "topic"],
   ["birthDate", "birthTime", "birthPlace"],
-  ["preferredDate", "preferredWindow", "question", "consent"],
+  [
+    "service",
+    "meetingMode",
+    "consultationLocation",
+    "preferredDate",
+    "preferredWindow",
+    "question",
+    "consent",
+  ],
 ] as const;
 
-const stepLabels = ["Contact", "Birth details", "Your request"] as const;
+const stepLabels = ["Contact", "Birth details", "Consultation"] as const;
 
-export function InquiryForm({ onBusyChange }: { onBusyChange: (busy: boolean) => void }) {
+export function InquiryForm({
+  onBusyChange,
+  selectedService,
+}: {
+  onBusyChange: (busy: boolean) => void;
+  selectedService?: ConsultationService;
+}) {
   const [step, setStep] = useState(0);
   const [state, setState] = useState<"idle" | "sending" | "success">("idle");
   const [confirmationSent, setConfirmationSent] = useState(false);
@@ -112,6 +135,10 @@ export function InquiryForm({ onBusyChange }: { onBusyChange: (busy: boolean) =>
   const [email, setEmail] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [topic, setTopic] = useState("");
+  const [service, setService] = useState<ConsultationService | "">(selectedService ?? "");
+  const [meetingMode, setMeetingMode] = useState<"online" | "inPerson" | "">("");
+  const [consultationLocation, setConsultationLocation] = useState("");
+  const [urgent, setUrgent] = useState(false);
   const [birthDate, setBirthDate] = useState<Dayjs | null>(null);
   const [birthTime, setBirthTime] = useState<Dayjs | null>(null);
   const [birthTimeApproximate, setBirthTimeApproximate] = useState(false);
@@ -146,6 +173,11 @@ export function InquiryForm({ onBusyChange }: { onBusyChange: (busy: boolean) =>
       email,
       whatsapp,
       topic,
+      service,
+      meetingMode: service === "oneToOne" ? meetingMode : undefined,
+      consultationLocation:
+        service === "oneToOne" && meetingMode === "inPerson" ? consultationLocation : undefined,
+      urgent,
       birthDate: birthDate?.isValid() ? birthDate.format("YYYY-MM-DD") : "",
       birthTime: birthTime?.isValid() ? birthTime.format("HH:mm") : "",
       birthTimeApproximate,
@@ -482,11 +514,129 @@ export function InquiryForm({ onBusyChange }: { onBusyChange: (busy: boolean) =>
       {step === 2 && (
         <fieldset className={styles.group}>
           <legend>
-            <span>03</span> Your preferred time
+            <span>03</span> Your consultation
           </legend>
           <p className={styles.groupHint}>
-            This is a request for follow-up, not a booked consultation slot.
+            Select a format and preferred time. The team will confirm the booking details with you.
           </p>
+          <div
+            className={styles.serviceChoices}
+            role="radiogroup"
+            aria-label="Consultation format"
+            aria-describedby={fieldErrors.service ? "service-error" : undefined}
+          >
+            {(
+              Object.entries(consultationServices) as [
+                ConsultationService,
+                (typeof consultationServices)[ConsultationService],
+              ][]
+            ).map(([key, option]) => (
+              <label
+                key={key}
+                className={`${styles.serviceChoice} ${service === key ? styles.serviceSelected : ""}`}
+              >
+                <input
+                  type="radio"
+                  name="service"
+                  value={key}
+                  checked={service === key}
+                  onChange={() => {
+                    setService(key);
+                    setMeetingMode("");
+                    setConsultationLocation("");
+                  }}
+                  required
+                />
+                <span>
+                  {option.label}
+                  <small>30 minutes</small>
+                </span>
+                <strong>{formatRupees(option.price)}</strong>
+              </label>
+            ))}
+          </div>
+          <FieldError name="service" errors={fieldErrors} />
+          {service === "oneToOne" && (
+            <div className={styles.serviceExtras}>
+              <label className={styles.field}>
+                Meeting preference <span>*</span>
+                <Select
+                  name="meetingMode"
+                  value={meetingMode}
+                  onChange={(event) => {
+                    setMeetingMode(event.target.value as "online" | "inPerson");
+                    setConsultationLocation("");
+                  }}
+                  displayEmpty
+                  required
+                  error={!!fieldErrors.meetingMode}
+                  inputProps={{
+                    "aria-label": "Meeting preference",
+                    "aria-describedby": fieldErrors.meetingMode ? "meetingMode-error" : undefined,
+                  }}
+                  MenuProps={menuProps}
+                  sx={controlSx}
+                >
+                  <MenuItem value="" disabled>
+                    Choose online or in person
+                  </MenuItem>
+                  <MenuItem value="online">Online</MenuItem>
+                  <MenuItem value="inPerson">In person</MenuItem>
+                </Select>
+                <FieldError name="meetingMode" errors={fieldErrors} />
+              </label>
+              {meetingMode === "inPerson" && (
+                <label className={styles.field}>
+                  Preferred city <span>*</span>
+                  <Select
+                    name="consultationLocation"
+                    value={consultationLocation}
+                    onChange={(event) => setConsultationLocation(String(event.target.value))}
+                    displayEmpty
+                    required
+                    error={!!fieldErrors.consultationLocation}
+                    inputProps={{
+                      "aria-label": "Preferred consultation city",
+                      "aria-describedby": fieldErrors.consultationLocation
+                        ? "consultationLocation-error"
+                        : undefined,
+                    }}
+                    MenuProps={menuProps}
+                    sx={controlSx}
+                  >
+                    <MenuItem value="" disabled>
+                      Choose a city
+                    </MenuItem>
+                    {consultationLocations.map((city) => (
+                      <MenuItem key={city} value={city}>
+                        {city}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <FieldError name="consultationLocation" errors={fieldErrors} />
+                </label>
+              )}
+            </div>
+          )}
+          <label className={styles.urgentChoice}>
+            <Checkbox
+              name="urgent"
+              checked={urgent}
+              onChange={(event) => setUrgent(event.target.checked)}
+              sx={{ color: "#8B1E1E", p: 0, "&.Mui-checked": { color: "#8B1E1E" } }}
+            />
+            <span>
+              <strong>I need an urgent consultation</strong>
+              <small>₹51,000 for any format, subject to availability</small>
+            </span>
+          </label>
+          {service && (
+            <p className={styles.selectedPrice}>
+              Selected consultation:{" "}
+              <strong>{formatRupees(consultationPrice(service, urgent))}</strong>{" "}
+              <span>· 30 minutes</span>
+            </p>
+          )}
           <div className={styles.grid}>
             <label className={styles.field}>
               Preferred date <span>*</span>

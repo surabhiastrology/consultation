@@ -15,8 +15,8 @@ export default function Terms() {
       <h2>Inquiry and booking</h2>
       <p>
         Submitting the form does not reserve a consultation slot. A member of the team will contact
-        you to discuss availability, format, duration and any fee. A consultation is confirmed only
-        when the terms are agreed directly with you.
+        you to confirm availability, format, duration and the listed price. A consultation is
+        confirmed only when the terms are agreed directly with you.
       </p>
       <h2>Information you submit</h2>
       <p>
@@ -32,9 +32,11 @@ export default function Terms() {
       </p>
       <h2>Fees and changes</h2>
       <p>
-        Any consultation fee, advance payment, cancellation or rescheduling arrangement should be
-        shared with you by the team before a booking is confirmed. The owner should publish final
-        policies for these matters before accepting paid appointments.
+        The listed price is ₹11,000 for a 30-minute audio call, ₹15,000 for a 30-minute video call,
+        or ₹24,000 for a 30-minute one-to-one consultation online or in person. An urgent request
+        for any format is ₹51,000, subject to availability. The team will confirm the final
+        appointment details and payment arrangements before a booking is made. The owner should
+        publish final cancellation and rescheduling policies before accepting paid appointments.
       </p>
       <h2>Contact and governing details</h2>
       <p>

@@ -7,14 +7,19 @@ import {
   ChevronDown,
   Heart,
   MessageCircleHeart,
+  PhoneCall,
   ShieldCheck,
   Sparkles,
+  UsersRound,
+  Video,
+  Zap,
 } from "lucide-react";
 import { InquiryModalProvider, InquiryTrigger } from "./InquiryModal";
 import { SocialProof } from "./SocialProof";
 import { CustomerMessages } from "./CustomerMessages";
 import { StickyInquiryBar } from "./StickyInquiryBar";
 import { FloatingWhatsApp } from "./FloatingWhatsApp";
+import { consultationServices, formatRupees, urgentConsultationPrice } from "@/lib/inquiry";
 import styles from "./LandingPage.module.css";
 
 const topics = [
@@ -87,9 +92,9 @@ const faqs = [
       "You can bring a question about relationships, marriage, career, business, family, finances, or another important decision. Share the context that matters to you.",
   },
   {
-    question: "How are consultation fees discussed?",
+    question: "What does a consultation cost?",
     answer:
-      "The team will share the consultation format, availability and any fee when they contact you. You can decide whether to proceed after discussing the details.",
+      "A 30-minute audio call is ₹11,000, a video call is ₹15,000, and a one-to-one consultation online or in person is ₹24,000. Urgent consultations are ₹51,000 for any format, subject to availability. The team confirms the details before you book.",
   },
   {
     question: "Does my preferred date reserve a consultation?",
@@ -104,7 +109,7 @@ const faqs = [
   {
     question: "What happens after I submit?",
     answer:
-      "The team receives your inquiry by email and may reply by WhatsApp, phone or email. They will discuss the right consultation, timing and any fee with you personally.",
+      "The team receives your inquiry by email and may reply by WhatsApp, phone or email. They will confirm the selected format, price, timing and next steps with you personally.",
   },
   {
     question: "How is my information handled?",
@@ -315,6 +320,132 @@ function Topics() {
   );
 }
 
+function Pricing() {
+  const options = [
+    {
+      key: "audio",
+      Icon: PhoneCall,
+      image: "/images/consultation-audio-surbhi-v2.webp",
+      imageAlt: "Surbhi Gupta listening on a phone call while making notes",
+      description: "A personal conversation by voice, wherever you are.",
+      detail: "By phone",
+      includes: [
+        "Your question in the context of your birth chart",
+        "Timing and patterns relevant to your situation",
+        "Possible next steps and remedies, where appropriate",
+      ],
+    },
+    {
+      key: "video",
+      Icon: Video,
+      image: "/images/consultation-video-surbhi-v3.webp",
+      imageAlt: "Surbhi Gupta greeting a client during a video consultation",
+      description: "Speak face to face from the comfort of your own space.",
+      detail: "Online video",
+      includes: [
+        "A chart-led conversation about your concerns",
+        "Space to discuss choices and timing together",
+        "Practical guidance and relevant remedies",
+      ],
+    },
+    {
+      key: "oneToOne",
+      Icon: UsersRound,
+      image: "/images/surbhi-office.webp",
+      imageAlt: "Surbhi Gupta at her consultation desk",
+      description: "A one-to-one session online or in person in Jaipur, Mumbai or Dubai.",
+      detail: "Online or in person",
+      includes: [
+        "A personal reading shaped around your question",
+        "Discussion of patterns, timing and possible ways forward",
+        "Guidance and traditional remedies where relevant",
+      ],
+    },
+  ] as const;
+
+  return (
+    <section
+      id="pricing"
+      className={`${styles.pricingSection} sectionSpace`}
+      aria-labelledby="pricing-title"
+    >
+      <div className="siteContainer">
+        <div className={styles.centerHeading}>
+          <Eyebrow>Consultation formats</Eyebrow>
+          <SectionTitle id="pricing-title">
+            Choose how you’d <em>like to talk.</em>
+          </SectionTitle>
+          <p>Three ways to have a personal conversation with Surbhi. Each session is 30 minutes.</p>
+        </div>
+        <div className={styles.pricingGrid}>
+          {options.map((option) => (
+            <article
+              className={`${styles.pricingCard} ${option.key === "oneToOne" ? styles.pricingFeatured : ""} ${option.key === "video" ? styles.pricingVideo : ""}`}
+              key={option.key}
+            >
+              <div className={styles.pricingImage}>
+                <Image
+                  src={option.image}
+                  alt={option.imageAlt}
+                  fill
+                  unoptimized={option.key !== "oneToOne"}
+                  sizes={
+                    option.key === "oneToOne"
+                      ? "(max-width: 900px) 90vw, 48vw"
+                      : "(max-width: 900px) 90vw, 60vw"
+                  }
+                />
+              </div>
+              <div className={styles.pricingContent}>
+                <div className={styles.pricingCardTop}>
+                  <span className={styles.pricingIcon} aria-hidden="true">
+                    <option.Icon size={21} strokeWidth={1.6} />
+                  </span>
+                </div>
+                <h3>{consultationServices[option.key].label}</h3>
+                <p>{option.description}</p>
+                <div className={styles.pricingIncludes}>
+                  <h4>What we’ll cover</h4>
+                  <ul>
+                    {option.includes.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className={styles.pricingFacts}>
+                  <span>30 minutes</span>
+                  <span>{option.detail}</span>
+                </div>
+                <div className={styles.pricingCardBottom}>
+                  <strong>{formatRupees(consultationServices[option.key].price)}</strong>
+                  <InquiryTrigger className={styles.pricingButton} service={option.key}>
+                    Ask about this <ArrowUpRight size={17} strokeWidth={1.8} aria-hidden="true" />
+                  </InquiryTrigger>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div className={styles.urgentBand}>
+          <span className={styles.urgentIcon} aria-hidden="true">
+            <Zap size={22} strokeWidth={1.7} />
+          </span>
+          <div>
+            <span>NEED TO SPEAK SOONER?</span>
+            <h3>Urgent consultation</h3>
+            <p>Available for any of the three formats, subject to confirmation by the team.</p>
+          </div>
+          <strong>{formatRupees(urgentConsultationPrice)}</strong>
+        </div>
+        <p className={styles.pricingNote}>
+          In-person sessions are offered in Jaipur, Mumbai and Dubai. Share your preferred format,
+          city and time; the team will confirm availability and booking details with you.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function WhyConsult() {
   return (
     <section className={`${styles.whySection} sectionSpace`} aria-labelledby="why-title">
@@ -503,7 +634,7 @@ function Steps() {
               <span>02</span>
             </div>
             <h3>We review your inquiry</h3>
-            <p>The team contacts you to confirm availability, format and any fee.</p>
+            <p>The team contacts you to confirm availability, format and the listed price.</p>
           </article>
           <article className={styles.stepCard}>
             <div className={`${styles.stepImage} ${styles.stepVisual}`}>
@@ -629,11 +760,13 @@ function Inquiry() {
             </h2>
             <p className={styles.inquiryIntro}>
               Share what is on your mind and take the first step toward a personal conversation with
-              Surbhi. Her team will contact you to discuss availability, format and any fee.
+              Surbhi. Her team will contact you to confirm availability, format and pricing.
             </p>
           </div>
           <PillLink gold>Share Your Question</PillLink>
-          <p className={styles.inquiryAside}>The team will discuss the consultation details with you.</p>
+          <p className={styles.inquiryAside}>
+            The team will discuss the consultation details with you.
+          </p>
         </div>
       </div>
     </section>
@@ -655,10 +788,34 @@ function Footer() {
             />
           </Link>
           <p>Personal guidance begins with a conversation.</p>
+          <a
+            className={styles.footerInstagram}
+            href="https://www.instagram.com/celebrity_astrologer_surbhi/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Surabhi Astrology on Instagram"
+          >
+            <svg
+              width="19"
+              height="19"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="2" y="2" width="20" height="20" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
         </div>
         <nav className={styles.footerColumn} aria-label="Explore">
           <h3>Explore</h3>
           <a href="#consultations">Consultations</a>
+          <a href="#pricing">Pricing</a>
           <a href="#how-it-works">How it works</a>
           <a href="#about">About Surbhi</a>
           <InquiryTrigger className={styles.footerInquiryButton}>
@@ -669,6 +826,13 @@ function Footer() {
           <h3>Information</h3>
           <Link href="/privacy-policy">Privacy policy</Link>
           <Link href="/terms-and-conditions">Terms & conditions</Link>
+          <a
+            href="https://kundalireport.surabhiastrology.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Kundali Report Portal <ArrowRight size={13} />
+          </a>
           <a href="https://surabhiastrology.com/" target="_blank" rel="noopener noreferrer">
             Main Surabhi website <ArrowRight size={13} />
           </a>
@@ -694,6 +858,7 @@ export function LandingPage() {
       <main id="main-content">
         <Hero />
         <Topics />
+        <Pricing />
         <Conversation />
         <Steps />
         <SocialProof />
