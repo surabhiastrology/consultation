@@ -338,7 +338,7 @@ function Pricing() {
     {
       key: "video",
       Icon: Video,
-      image: "/images/consultation-video-surbhi-v3.webp",
+      image: "/images/consultation-video-surbhi-final.webp",
       imageAlt: "Surbhi Gupta greeting a client during a video consultation",
       description: "Speak face to face from the comfort of your own space.",
       detail: "Online video",

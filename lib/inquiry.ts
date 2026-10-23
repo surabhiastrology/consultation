@@ -18,8 +18,8 @@ export const timeWindows = [
   "Evening (4pm–8pm)",
 ] as const;
 export const consultationServices = {
-  audio: { label: "Audio call", price: 11_000 },
-  video: { label: "Video call", price: 15_000 },
+  audio: { label: "Audio consultation", price: 11_000 },
+  video: { label: "Video consultation", price: 15_000 },
   oneToOne: { label: "One-to-one consultation", price: 24_000 },
 } as const;
 export const consultationLocations = ["Jaipur", "Mumbai", "Dubai"] as const;
