@@ -325,7 +325,7 @@ function Pricing() {
     {
       key: "audio",
       Icon: PhoneCall,
-      image: "/images/consultation-audio-surbhi-v2.webp",
+      image: "/images/consultation-audio-surbhi-final.webp",
       imageAlt: "Surbhi Gupta listening on a phone call while making notes",
       description: "A personal conversation by voice, wherever you are.",
       detail: "By phone",
