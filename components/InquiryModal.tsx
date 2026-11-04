@@ -7,12 +7,15 @@ import { InquiryForm } from "./InquiryForm";
 import type { ConsultationService } from "@/lib/inquiry";
 import styles from "./InquiryModal.module.css";
 
-const InquiryModalContext = createContext<((service?: ConsultationService) => void) | null>(null);
+const InquiryModalContext = createContext<
+  ((service?: ConsultationService, urgent?: boolean) => void) | null
+>(null);
 
 export function InquiryModalProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [selectedService, setSelectedService] = useState<ConsultationService | undefined>();
+  const [selectedUrgent, setSelectedUrgent] = useState(false);
   const [formInstance, setFormInstance] = useState(0);
   const close = () => {
     if (!busy) setOpen(false);
@@ -20,8 +23,9 @@ export function InquiryModalProvider({ children }: Readonly<{ children: ReactNod
 
   return (
     <InquiryModalContext.Provider
-      value={(service) => {
+      value={(service, urgent = false) => {
         setSelectedService(service);
+        setSelectedUrgent(urgent);
         setFormInstance((instance) => instance + 1);
         setOpen(true);
       }}
@@ -47,7 +51,12 @@ export function InquiryModalProvider({ children }: Readonly<{ children: ReactNod
           </IconButton>
           <h2 id="inquiry-dialog-title">Your question deserves time.</h2>
         </div>
-        <InquiryForm key={formInstance} onBusyChange={setBusy} selectedService={selectedService} />
+        <InquiryForm
+          key={formInstance}
+          onBusyChange={setBusy}
+          selectedService={selectedService}
+          selectedUrgent={selectedUrgent}
+        />
       </Dialog>
     </InquiryModalContext.Provider>
   );
@@ -57,11 +66,17 @@ export function InquiryTrigger({
   children,
   className,
   service,
-}: Readonly<{ children: ReactNode; className?: string; service?: ConsultationService }>) {
+  urgent,
+}: Readonly<{
+  children: ReactNode;
+  className?: string;
+  service?: ConsultationService;
+  urgent?: boolean;
+}>) {
   const openInquiry = useContext(InquiryModalContext);
   if (!openInquiry) throw new Error("InquiryTrigger must be used within InquiryModalProvider.");
   return (
-    <button type="button" className={className} onClick={() => openInquiry(service)}>
+    <button type="button" className={className} onClick={() => openInquiry(service, urgent)}>
       {children}
     </button>
   );

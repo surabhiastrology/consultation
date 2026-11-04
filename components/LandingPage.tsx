@@ -426,7 +426,7 @@ function Pricing() {
             </article>
           ))}
         </div>
-        <div className={styles.urgentBand}>
+        <InquiryTrigger className={styles.urgentBand} urgent>
           <span className={styles.urgentIcon} aria-hidden="true">
             <Zap size={22} strokeWidth={1.7} />
           </span>
@@ -436,7 +436,7 @@ function Pricing() {
             <p>Available for any of the three formats, subject to confirmation by the team.</p>
           </div>
           <strong>{formatRupees(urgentConsultationPrice)}</strong>
-        </div>
+        </InquiryTrigger>
         <p className={styles.pricingNote}>
           In-person sessions are offered in Jaipur, Mumbai and Dubai. Share your preferred format,
           city and time; the team will confirm availability and booking details with you.
@@ -690,14 +690,11 @@ function About() {
         <div className={styles.aboutVisual}>
           <div className={styles.aboutPortrait}>
             <Image
-              src="/images/surbhi-gupta.webp"
-              alt="Original photograph of Surbhi Gupta"
+              src="/images/surbhi-event-consultation.webp"
+              alt="Surbhi Gupta speaking at a JAGS event"
               fill
               sizes="(max-width: 800px) 90vw, 42vw"
             />
-          </div>
-          <div className={styles.aboutSignature}>
-            Surbhi Gupta <span>Surabhi Astrology</span>
           </div>
         </div>
       </div>

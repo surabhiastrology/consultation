@@ -599,6 +599,7 @@
 }
 .urgentBand {
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: flex-start;
   gap: 30px;
@@ -608,6 +609,19 @@
   border-radius: 17px;
   background: linear-gradient(105deg, #4a0404, #801b24);
   color: #fff9ef;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: filter 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+.urgentBand:hover {
+  filter: brightness(1.06);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px #4a040424;
+}
+.urgentBand:focus-visible {
+  outline: 3px solid #c8a84b;
+  outline-offset: 4px;
 }
 .urgentBand > div {
   flex: 1;
@@ -1025,44 +1039,13 @@
 }
 .aboutPortrait {
   position: relative;
-  height: 475px;
+  aspect-ratio: 83 / 65;
   overflow: hidden;
-  border: 8px solid #f9ecd9;
-  border-radius: 48% 48% 12px 12px / 27% 27% 12px 12px;
-  box-shadow:
-    0 0 0 1px #d7b777,
-    0 18px 35px #4e251229;
+  border-radius: 8px;
 }
 .aboutPortrait img {
   object-fit: cover;
-  object-position: 61% 45%;
-}
-.aboutSignature {
-  position: absolute;
-  right: -20px;
-  bottom: 15px;
-  min-width: 205px;
-  padding: 13px 22px;
-  border-radius: 6px;
-  background: #fffaf0;
-  box-shadow: var(--shadow-soft);
-  color: #5a1916;
-  font-family: var(--font-heading);
-  font-size: 28px;
-  font-style: italic;
-  text-align: center;
-  transform: rotate(-3deg);
-}
-.aboutSignature span {
-  display: block;
-  margin-top: 3px;
-  color: #9b772d;
-  font-family: var(--font-body);
-  font-size: 9px;
-  font-style: normal;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  object-position: center;
 }
 .faqSection {
   background: #fffaf3;
@@ -1480,7 +1463,7 @@
     justify-self: center;
   }
   .aboutPortrait {
-    height: 460px;
+    aspect-ratio: 83 / 65;
   }
   .faqVisual {
     height: 460px;

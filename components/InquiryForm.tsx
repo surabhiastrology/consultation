@@ -118,9 +118,11 @@ const stepLabels = ["Contact", "Birth details", "Consultation"] as const;
 export function InquiryForm({
   onBusyChange,
   selectedService,
+  selectedUrgent = false,
 }: {
   onBusyChange: (busy: boolean) => void;
   selectedService?: ConsultationService;
+  selectedUrgent?: boolean;
 }) {
   const [step, setStep] = useState(0);
   const [state, setState] = useState<"idle" | "sending" | "success">("idle");
@@ -138,7 +140,7 @@ export function InquiryForm({
   const [service, setService] = useState<ConsultationService | "">(selectedService ?? "");
   const [meetingMode, setMeetingMode] = useState<"online" | "inPerson" | "">("");
   const [consultationLocation, setConsultationLocation] = useState("");
-  const [urgent, setUrgent] = useState(false);
+  const [urgent, setUrgent] = useState(selectedUrgent);
   const [birthDate, setBirthDate] = useState<Dayjs | null>(null);
   const [birthTime, setBirthTime] = useState<Dayjs | null>(null);
   const [birthTimeApproximate, setBirthTimeApproximate] = useState(false);
