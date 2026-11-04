@@ -426,7 +426,7 @@ function Pricing() {
             </article>
           ))}
         </div>
-        <InquiryTrigger className={styles.urgentBand} urgent>
+        <div className={styles.urgentBand}>
           <span className={styles.urgentIcon} aria-hidden="true">
             <Zap size={22} strokeWidth={1.7} />
           </span>
@@ -436,7 +436,10 @@ function Pricing() {
             <p>Available for any of the three formats, subject to confirmation by the team.</p>
           </div>
           <strong>{formatRupees(urgentConsultationPrice)}</strong>
-        </InquiryTrigger>
+          <InquiryTrigger className={styles.urgentButton} urgent>
+            Book urgent consultation <ArrowUpRight size={17} strokeWidth={1.8} aria-hidden="true" />
+          </InquiryTrigger>
+        </div>
         <p className={styles.pricingNote}>
           In-person sessions are offered in Jaipur, Mumbai and Dubai. Share your preferred format,
           city and time; the team will confirm availability and booking details with you.
